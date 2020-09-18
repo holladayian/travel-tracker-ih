@@ -13,10 +13,42 @@ console.log('proper clone test')
 
 import fetcher from './fetch.js';
 
+let userData, userTrips, tripsToDisplay;
+
+
 window.onload = fetchStuff;
 // window.onload = fetcher.fetchTrips
+window.addEventListener('click', clickLog);
 
 function fetchStuff() {
-    console.log('fetcher.fetchUser(50)', fetcher.fetchUser(7))
+    fetcher.fetchUser(7);
+    // fetcher.fetchTripsForAUser()
     // fetcher.fetchTrips().filter(trip => trip.userID === fetcher.fetchUser().id)
 }
+
+let userStuff = {
+      setUserData(fetchedUserData) {
+        userData = fetchedUserData
+    },
+    setUserTrips(fetchedTrips) {
+        //  console.log(fetchedTrips.trips)
+        userTrips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === userData.id)
+     }
+}
+
+function whichTripsToDisplay(tripStatus) {
+    tripsToDisplay = userTrips.filter(userTrip => userTrip.status === tripStatus)
+}
+
+
+
+
+function clickLog() {
+    console.log("userTrips", userTrips)
+    // console.log("userData", userData)
+    whichTripsToDisplay('approved');
+    console.log(tripsToDisplay)
+}
+
+// export default userData;
+export default userStuff;
