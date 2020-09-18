@@ -17,6 +17,6 @@ window.onload = fetchStuff;
 // window.onload = fetcher.fetchTrips
 
 function fetchStuff() {
-    console.log('fetcher.fetchUser(50)', fetcher.fetchUser(50))
+    console.log('fetcher.fetchUser(50)', fetcher.fetchUser(7))
     // fetcher.fetchTrips().filter(trip => trip.userID === fetcher.fetchUser().id)
 }
