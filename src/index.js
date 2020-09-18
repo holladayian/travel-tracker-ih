@@ -13,7 +13,7 @@ console.log('proper clone test')
 
 import fetcher from './fetch.js';
 
-let userData, userTrips;
+let userData, userTrips, tripsToDisplay;
 
 
 window.onload = fetchStuff;
@@ -36,12 +36,18 @@ let userStuff = {
      }
 }
 
+function whichTripsToDisplay(tripStatus) {
+    tripsToDisplay = userTrips.filter(userTrip => userTrip.status === tripStatus)
+}
+
 
 
 
 function clickLog() {
     console.log("userTrips", userTrips)
-    console.log("userData", userData)
+    // console.log("userData", userData)
+    whichTripsToDisplay('approved');
+    console.log(tripsToDisplay)
 }
 
 // export default userData;
