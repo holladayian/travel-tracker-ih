@@ -22,7 +22,7 @@ window.addEventListener('click', clickLog);
 
 function fetchStuff() {
     fetcher.fetchUser(7);
-    fetcher.fetchTripsForAUser()
+    // fetcher.fetchTripsForAUser()
     // fetcher.fetchTrips().filter(trip => trip.userID === fetcher.fetchUser().id)
 }
 
@@ -30,14 +30,18 @@ let userStuff = {
       setUserData(fetchedUserData) {
         userData = fetchedUserData
     },
-
+    setUserTrips(fetchedTrips) {
+        //  console.log(fetchedTrips.trips)
+        userTrips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === userData.id)
+     }
 }
 
 
 
 
 function clickLog() {
-    console.log(userTrips)
+    console.log("userTrips", userTrips)
+    console.log("userData", userData)
 }
 
 // export default userData;

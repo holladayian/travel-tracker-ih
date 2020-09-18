@@ -5,6 +5,7 @@ let fetcher = {
     fetch(`https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${id}`)
         .then(response => response.json())
         .then(data => userStuff.setUserData(data))
+        .then(this.fetchTripsForAUser())
         .catch(err => console.log('err', err))
 },
 
