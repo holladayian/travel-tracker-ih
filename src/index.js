@@ -17,14 +17,11 @@ let userData, userTrips, tripsToDisplay, allDestinations;
 
 
 window.onload = fetchStuff;
-// window.onload = fetcher.fetchTrips
 window.addEventListener('click', clickLog);
 
 function fetchStuff() {
     fetcher.fetchUser(7);
-    // fetcher.fetchDestination()
-    // fetcher.fetchTripsForAUser()
-    // fetcher.fetchTrips().filter(trip => trip.userID === fetcher.fetchUser().id)
+    fetcher.fetchDestination();
 }
 
 let userStuff = {
@@ -32,13 +29,12 @@ let userStuff = {
         userData = fetchedUserData
     },
     setUserTrips(fetchedTrips) {
-        //  console.log(fetchedTrips.trips)
         userTrips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === userData.id)
      },
 
-    //  setDestinations(fetchedDestinations) {
-    //     allDestinations = fetchedDestinations
-    //  }
+     setDestinations(fetchedDestinations) {
+        allDestinations = fetchedDestinations
+     }
 }
 
 function whichTripsToDisplay(tripStatus) {
@@ -50,10 +46,8 @@ function whichTripsToDisplay(tripStatus) {
 
 function clickLog() {
     console.log("allDestinations", allDestinations)
-    // console.log("userData", userData)
-    // whichTripsToDisplay('approved');
-    // console.log(tripsToDisplay)
+    console.log(tripsToDisplay)
 }
 
-// export default userData;
 export default userStuff;
+// maybe rename userStuff, maybe 

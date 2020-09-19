@@ -13,17 +13,15 @@ let fetcher = {
     fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
         .then(response => response.json())
         .then(data => userStuff.setUserTrips(data.trips))
-        // .then(data => console.log(data.trips.filter(trips => trips.userID === userData.id)))
         .catch(err => console.log('err', err))
     },
 
-    // fetchDestination() {
-    //     fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations')
-    //         .then(response => response.json())
-    //         .then(data => userStuff.setDestinations(data))
-    //         .catch(err => console.log('err', err))
-    // }
-    // Add this back in ^
+    fetchDestination() {
+        fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations')
+            .then(response => response.json())
+            .then(data => userStuff.setDestinations(data))
+            .catch(err => console.log('err', err))
+    }
 
 }
 
