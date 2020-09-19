@@ -1,4 +1,4 @@
-const moment = require('moment') 
+const moment = require('moment');
 
 
 class User {
@@ -14,9 +14,6 @@ class User {
         let today = moment(Date.now());
         return this.trips.filter(trip => moment(trip.date).isBefore(today) && moment(trip.date).isAfter(today.subtract(1, 'year')))
     }
-    // assignTrips(userTripsToAssign) {
-    //     this.trips = userTripsToAssign
-    // }
 }
 
 export default User
