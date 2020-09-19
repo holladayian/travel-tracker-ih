@@ -15,9 +15,9 @@ describe('User', () => {
             {id: 77, userID: 7, destinationID: 46, travelers: 5, date: "2020/05/28", status: 'approved'},
             {id: 84, userID: 7, destinationID: 1, travelers: 1, date: "2020/11/23", status: 'approved'},
             {id: 97, userID: 7, destinationID: 3, travelers: 3, date: "2020/08/20", status: 'approved'},
-            {id: 98, userID: 7, destinationID: 12, travelers: 6, date: "2020/10/6", status: 'approved'},
+            {id: 98, userID: 7, destinationID: 12, travelers: 6, date: "2020/10/6", status: 'pending'},
             {id: 123, userID: 7, destinationID: 16, travelers: 6, date: "2020/05/03", status: 'approved'},
-            {id: 145, userID: 7, destinationID: 31, travelers: 6, date: "2020/04/01/", status: 'approved'}
+            {id: 145, userID: 7, destinationID: 31, travelers: 6, date: "2020/04/01", status: 'approved'}
         ];
         user = new User(sampleUser);
         user.trips = sampleUserTrips;
@@ -38,6 +38,10 @@ describe('User', () => {
             expect(user.searchApprovedTrips('past').length).to.equal(5);
             expect(user.searchApprovedTrips('current').length).to.equal(0);
             expect(user.searchApprovedTrips('upcoming').length).to.equal(2);
+        }),
+
+        it('should be able to search pending trips', () => {
+            expect(user.searchPendingTrips().length).to.equal(1)
         })
     })
 })

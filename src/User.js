@@ -27,6 +27,10 @@ class User {
         }
         return searchedTrips
     }
+
+    searchPendingTrips() {
+        return this.trips.filter(trip => trip.status === 'pending')
+    }
 }
 
 export default User
