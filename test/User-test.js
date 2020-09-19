@@ -32,6 +32,12 @@ describe('User', () => {
 
         it('should return trips for the current year', () => {
             expect(user.getTripsForAYear().length).to.equal(1)
+        }),
+
+        it('should be able to search approved trips', () => {
+            expect(user.searchApprovedTrips('past').length).to.equal(5);
+            expect(user.searchApprovedTrips('current').length).to.equal(0);
+            expect(user.searchApprovedTrips('upcoming').length).to.equal(2);
         })
     })
 })
