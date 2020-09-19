@@ -5,6 +5,7 @@
 import './css/base.scss';
 import fetcher from './fetch.js';
 import User from './User.js';
+import domUpdates from './DOM-updates.js'
 
 let tripsToDisplay, allDestinations, user;
 
@@ -18,7 +19,8 @@ function fetchStuff() {
 
 let fetchSetter = {
     setUserData(fetchedUserData) {
-        user = new User(fetchedUserData)
+        user = new User(fetchedUserData);
+        domUpdates.greetUser(user.name)
     },
     setUserTrips(fetchedTrips) {
         user.trips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === user.id)

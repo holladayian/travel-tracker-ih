@@ -1,4 +1,5 @@
 import fetchSetter from './index.js';
+// import domUpdates from './DOM-updates.js';
 
 let fetcher = {
  fetchUser(id) {
@@ -6,6 +7,7 @@ let fetcher = {
         .then(response => response.json())
         .then(data => fetchSetter.setUserData(data))
         .then(this.fetchTripsForAUser())
+        // .then(data => domUpdates.greetUser(data.name))
         .catch(err => console.log('err', err))
 },
 
