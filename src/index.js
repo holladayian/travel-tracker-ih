@@ -8,7 +8,7 @@ import './css/base.scss';
 import fetcher from './fetch.js';
 import User from './User.js';
 
-let userData, userTrips, tripsToDisplay, allDestinations, user;
+let tripsToDisplay, allDestinations, user;
 
 
 window.onload = fetchStuff;
@@ -22,12 +22,9 @@ function fetchStuff() {
 let fetchSetter = {
       setUserData(fetchedUserData) {
           user = new User(fetchedUserData)
-        // userData = fetchedUserData
     },
     setUserTrips(fetchedTrips) {
-        // console.log("fetchedTrips", fetchedTrips);
         user.trips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === user.id)
-        // userTrips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === userData.id)
      },
 
      setDestinations(fetchedDestinations) {
@@ -36,14 +33,13 @@ let fetchSetter = {
 }
 
 function whichTripsToDisplay(tripStatus) {
-    tripsToDisplay = userTrips.filter(userTrip => userTrip.status === tripStatus)
+    tripsToDisplay = user.trips.filter(userTrip => userTrip.status === tripStatus)
 }
 
 
 
 
 function clickLog() {
-    // console.log("allDestinations", allDestinations)
     console.log("user", user)
     console.log(user.trips)
 }
