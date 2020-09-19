@@ -4,16 +4,11 @@
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
-
-console.log('This is the JavaScript entry file - your code begins here.');
-
-console.log('proper clone test')
 
 import fetcher from './fetch.js';
+import User from './User.js';
 
-let userData, userTrips, tripsToDisplay, allDestinations;
+let userData, userTrips, tripsToDisplay, allDestinations, user;
 
 
 window.onload = fetchStuff;
@@ -24,12 +19,15 @@ function fetchStuff() {
     fetcher.fetchDestination();
 }
 
-let userStuff = {
+let fetchSetter = {
       setUserData(fetchedUserData) {
-        userData = fetchedUserData
+          user = new User(fetchedUserData)
+        // userData = fetchedUserData
     },
     setUserTrips(fetchedTrips) {
-        userTrips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === userData.id)
+        // console.log("fetchedTrips", fetchedTrips);
+        user.trips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === user.id)
+        // userTrips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === userData.id)
      },
 
      setDestinations(fetchedDestinations) {
@@ -45,9 +43,10 @@ function whichTripsToDisplay(tripStatus) {
 
 
 function clickLog() {
-    console.log("allDestinations", allDestinations)
-    console.log(tripsToDisplay)
+    // console.log("allDestinations", allDestinations)
+    console.log("user", user)
+    console.log(user.trips)
 }
 
-export default userStuff;
+export default fetchSetter;
 // maybe rename userStuff, maybe 
