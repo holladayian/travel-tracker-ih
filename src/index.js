@@ -13,7 +13,7 @@ console.log('proper clone test')
 
 import fetcher from './fetch.js';
 
-let userData, userTrips, tripsToDisplay;
+let userData, userTrips, tripsToDisplay, allDestinations;
 
 
 window.onload = fetchStuff;
@@ -22,6 +22,7 @@ window.addEventListener('click', clickLog);
 
 function fetchStuff() {
     fetcher.fetchUser(7);
+    // fetcher.fetchDestination()
     // fetcher.fetchTripsForAUser()
     // fetcher.fetchTrips().filter(trip => trip.userID === fetcher.fetchUser().id)
 }
@@ -33,7 +34,11 @@ let userStuff = {
     setUserTrips(fetchedTrips) {
         //  console.log(fetchedTrips.trips)
         userTrips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === userData.id)
-     }
+     },
+
+    //  setDestinations(fetchedDestinations) {
+    //     allDestinations = fetchedDestinations
+    //  }
 }
 
 function whichTripsToDisplay(tripStatus) {
@@ -44,10 +49,10 @@ function whichTripsToDisplay(tripStatus) {
 
 
 function clickLog() {
-    console.log("userTrips", userTrips)
+    console.log("allDestinations", allDestinations)
     // console.log("userData", userData)
-    whichTripsToDisplay('approved');
-    console.log(tripsToDisplay)
+    // whichTripsToDisplay('approved');
+    // console.log(tripsToDisplay)
 }
 
 // export default userData;
