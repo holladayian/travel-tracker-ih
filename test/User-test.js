@@ -32,7 +32,12 @@ describe('User', () => {
             expect(user.travelerType).to.equal("foodie");
             expect(user.trips.length).to.equal(7);
 
+        }),
+
+        it('should return trips for the current year', () => {
+            expect(user.getTripsForAYear().length).to.equal(1)
         })
+        
 
         // it('should assign it\'s trip data', () => {
         //     expect(user.trips.length).to.equal(0);
