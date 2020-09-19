@@ -3,7 +3,6 @@ import User from '../src/User.js';
 
 let sampleUser, sampleUserTrips, user;
 
-
 describe('User', () => {
     beforeEach(() => {
         sampleUser = {
@@ -22,8 +21,6 @@ describe('User', () => {
         ];
         user = new User(sampleUser);
         user.trips = sampleUserTrips;
-
-        // user.trips = sampleUserTrips;
     });
     describe('User Class', () => {
         it('should hold onto it\'s user data', () => {
@@ -31,20 +28,10 @@ describe('User', () => {
             expect(user.name).to.equal("Morey Flanders");
             expect(user.travelerType).to.equal("foodie");
             expect(user.trips.length).to.equal(7);
-
         }),
 
         it('should return trips for the current year', () => {
             expect(user.getTripsForAYear().length).to.equal(1)
         })
-        
-
-        // it('should assign it\'s trip data', () => {
-        //     expect(user.trips.length).to.equal(0);
-        //     user.trips = sampleUserTrips;
-        //     expect(user.trips.length).to.equal(7);
-        // })
     })
-
-
 })

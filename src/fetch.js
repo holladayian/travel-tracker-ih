@@ -10,6 +10,7 @@ let fetcher = {
 },
 
  fetchTripsForAUser() {
+    //  rename 
     fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
         .then(response => response.json())
         .then(data => fetchSetter.setUserTrips(data.trips))
