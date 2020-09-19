@@ -10,7 +10,6 @@ class User {
     }
 
     getTripsForAYear() {
-        console.log()
         let today = moment(Date.now());
         return this.trips.filter(trip => moment(trip.date).isBefore(today) && moment(trip.date).isAfter(today.subtract(1, 'year')))
     }
