@@ -44,6 +44,60 @@ justify-content: space-between;
 
 .selection-box > button {
   margin: 10px;
+
 }
+
+.card-area {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-left: 135px;
+  margin-right: 135px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: teal;
+  height: 295px;
+  width: 165px;
+  align-items: center;
+  padding: 10px;
+  margin: 10px
+}
+
+.card > img {
+  height: 125px;
+  width: 140px;
+}
+
+.card-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+// .start-date {
+// 	// position: absolute;
+// 	top: 0;
+// 	left: 0;
+// }
+// .end-date {
+// 	// position: absolute;
+// 	top: 0;
+// 	right: 0%;
+// }
+// .party-size {
+// 	// position: absolute;
+// 	bottom: 0%;
+// 	left: 0;
+// }
+// .price-for-a-trip {
+// 	bottom: 0%;
+// 	right: 0%;
+// 	// position: absolute;
+// }
 
 
