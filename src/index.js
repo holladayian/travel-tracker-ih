@@ -4,12 +4,6 @@
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
-
-console.log('This is the JavaScript entry file - your code begins here.');
-
-console.log('proper clone test')
 
 import fetcher from './fetch.js';
 
@@ -24,7 +18,7 @@ function fetchStuff() {
     fetcher.fetchDestination();
 }
 
-let userStuff = {
+let fetchSetter = {
       setUserData(fetchedUserData) {
         userData = fetchedUserData
     },
@@ -46,8 +40,8 @@ function whichTripsToDisplay(tripStatus) {
 
 function clickLog() {
     console.log("allDestinations", allDestinations)
-    console.log(tripsToDisplay)
+    console.log(userTrips)
 }
 
-export default userStuff;
+export default fetchSetter;
 // maybe rename userStuff, maybe 
