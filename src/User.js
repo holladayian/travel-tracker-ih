@@ -15,6 +15,7 @@ class User {
     }
 
     searchApprovedTrips(timeFrame) {
+        // this naming should probably change if it also calls this.searchPendingTrips()
         let today = moment(Date.now());
         let searchedTrips;
         if (timeFrame === 'present') {

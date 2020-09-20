@@ -25,7 +25,8 @@ function fetchStuff() {
         fetchSetter.setUserData(values[0]);
         fetchSetter.setUserTrips(values[1].trips, values[0]);
         fetchSetter.setDestinations(values[2].destinations);
-        fetchSetter.fixTerribleData()
+        fetchSetter.fixTerribleData();
+        findAmountSpentOnAYear(user.trips);
     })
     // fetcher.fetchDestination();
 }
@@ -52,7 +53,20 @@ let fetchSetter = {
             trip.image = foundDestination.image;
             trip.alt = foundDestination.alt;
         })
+        console.log(user.trips)
     }
+}
+
+function findAmountSpentOnAYear(totapTrips) {
+    console.log('totapTrips', totapTrips)
+        let totalSpentForATrip = totapTrips.reduce((totalPrice, trip) => {
+            let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
+            let totalPricePerPerson = (costPerDuration += trip.estimatedFlightCostPerPerson);
+            let totalPriceForTheTrip = (totalPricePerPerson * trip.travelers)
+            totalPrice += totalPriceForTheTrip;
+            return totalPrice
+        }, 0)
+        domUpdates.tellMeYourMoneys(totalSpentForATrip * 1.1)
 }
 
 function whichTripsToDisplay(tripStatus) {

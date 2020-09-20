@@ -29,6 +29,12 @@ let domUpdates = {
     greetUser(name) {
         const userGreeting = document.querySelector('.welcome-message');
         userGreeting.innerHTML = `${name}`.split(' ')[0] + ' ' + `${name}`.split(' ')[1];
+    },
+
+    tellMeYourMoneys(totalYearlySpent) {
+        let roundedTotal = (Math.round(totalYearlySpent * 100) / 100)
+        let totalYearlySpending = document.querySelector('.total-yearly-spending');
+        totalYearlySpending.innerHTML = `You've spent ${roundedTotal} this year`
     }
 
 
