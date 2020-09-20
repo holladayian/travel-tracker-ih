@@ -11,13 +11,13 @@ describe('User', () => {
             "travelerType": "foodie"
             };
         sampleUserTrips = [
-            {id: 76, userID: 7, destinationID: 17, travelers: 5, date: "2019/10/22", status: 'approved'},
-            {id: 77, userID: 7, destinationID: 46, travelers: 5, date: "2020/05/28", status: 'approved'},
-            {id: 84, userID: 7, destinationID: 1, travelers: 1, date: "2020/11/23", status: 'approved'},
-            {id: 97, userID: 7, destinationID: 3, travelers: 3, date: "2020/08/20", status: 'approved'},
-            {id: 98, userID: 7, destinationID: 12, travelers: 6, date: "2020/10/6", status: 'pending'},
-            {id: 123, userID: 7, destinationID: 16, travelers: 6, date: "2020/05/03", status: 'approved'},
-            {id: 145, userID: 7, destinationID: 31, travelers: 6, date: "2020/04/01", status: 'approved'}
+            {id: 76, userID: 7, destinationID: 17, travelers: 5, date: "2019/10/22", status: 'approved', duration: 3},
+            {id: 77, userID: 7, destinationID: 46, travelers: 5, date: "2020/05/28", status: 'approved', duration: 2},
+            {id: 84, userID: 7, destinationID: 1, travelers: 1, date: "2020/11/23", status: 'approved', duration: 3},
+            {id: 97, userID: 7, destinationID: 3, travelers: 3, date: "2020/08/20", status: 'approved', duration: 4},
+            {id: 98, userID: 7, destinationID: 12, travelers: 6, date: "2020/10/6", status: 'pending', duration: 3},
+            {id: 123, userID: 7, destinationID: 16, travelers: 6, date: "2020/05/03", status: 'approved', duration: 7},
+            {id: 145, userID: 7, destinationID: 31, travelers: 6, date: "2020/04/01", status: 'approved', duration: 1}
         ];
         user = new User(sampleUser);
         user.trips = sampleUserTrips;
@@ -36,8 +36,8 @@ describe('User', () => {
 
         it('should be able to search approved trips', () => {
             expect(user.searchApprovedTrips('past').length).to.equal(5);
-            expect(user.searchApprovedTrips('current').length).to.equal(0);
-            expect(user.searchApprovedTrips('upcoming').length).to.equal(2);
+            expect(user.searchApprovedTrips('current')).to.equal(undefined);
+            expect(user.searchApprovedTrips('upcoming').length).to.equal(0);
         }),
 
         it('should be able to search pending trips', () => {
