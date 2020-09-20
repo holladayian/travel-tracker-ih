@@ -4,9 +4,7 @@ $primary-background: radial-gradient(circle, rgb(197, 134, 61) 0%, rgb(37, 69, 2
 
 body {
   background: $primary-background;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
 }
 
 header {
@@ -14,6 +12,18 @@ width: 100%;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
+}
+
+.trips {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.requests {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .hidden {
@@ -76,5 +86,10 @@ justify-content: space-between;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+}
+
+.selected-location {
+  width: 195px;
+  height: 175px
 }
 
