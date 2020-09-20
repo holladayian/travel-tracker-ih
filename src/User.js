@@ -15,15 +15,24 @@ class User {
     }
 
     searchApprovedTrips(timeFrame) {
+        // this naming should probably change if it also calls this.searchPendingTrips()
         let today = moment(Date.now());
         let searchedTrips;
-        if (timeFrame === 'current') {
-            searchedTrips = this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isAfter(today) && moment(trip.date).add(trip.duration, 'day').isBefore(today))
-
+        if (timeFrame === 'present') {
+            searchedTrips = this.trips.filter(trip => {
+                if (moment(trip.date).isBefore(today) && moment(trip.date).add(trip.duration, 'day').isAfter(today)) {
+                    return trip
+                }
+            })
         } else if (timeFrame === 'upcoming') {
-            searchedTrips =  this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isAfter(today))
-        } else {
+            searchedTrips =  this.trips.filter(trip => {
+                if(moment(trip.date).add(trip.duration, 'day').isAfter(today && trip.status === 'approved')) {
+                    return trip
+                }})
+        } else if (timeFrame === 'past') {
             searchedTrips = this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isBefore(today))
+        } else if (timeFrame === 'pending') {
+            searchedTrips = this.searchPendingTrips()
         }
         return searchedTrips
     }

@@ -5,37 +5,68 @@
 import './css/base.scss';
 import fetcher from './fetch.js';
 import User from './User.js';
+import domUpdates from './DOM-updates.js';
+
+let selectionBox = document.querySelector('.selection-box');
 
 let tripsToDisplay, allDestinations, user;
 
 window.onload = fetchStuff;
-window.addEventListener('click', clickLog);
+selectionBox.addEventListener('click', clickLog);
 
 function fetchStuff() {
-    fetcher.fetchUser(7);
-    fetcher.fetchDestination();
+    let promisededUser = fetcher.fetchUser(7);
+    let promisededAllTrips = fetcher.fetchTripsForAUser();
+    let promisededAllDestinations = fetcher.fetchDestination();
+
+    Promise.all([promisededUser, promisededAllTrips, promisededAllDestinations])
+    .then(values => {
+        fetchSetter.setUserData(values[0]);
+        fetchSetter.setUserTrips(values[1].trips, values[0]);
+        fetchSetter.setDestinations(values[2].destinations);
+        fetchSetter.fixTerribleData();
+        findAmountSpentOnAYear(user.trips);
+    })
 }
 
 let fetchSetter = {
     setUserData(fetchedUserData) {
-        user = new User(fetchedUserData)
+        user = new User(fetchedUserData);
+        domUpdates.greetUser(user.name)
     },
-    setUserTrips(fetchedTrips) {
-        user.trips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === user.id)
+    setUserTrips(fetchedTrips, fetchedUser) {
+        user.trips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === fetchedUser.id)
     },
 
     setDestinations(fetchedDestinations) {
-        allDestinations = fetchedDestinations
+        allDestinations = fetchedDestinations;
+    },
+
+    fixTerribleData() {
+        user.trips.forEach(trip => {
+            let foundDestination = allDestinations.find(singleDestination => singleDestination.id === trip.destinationID);
+            trip.destination = foundDestination.destination;
+            trip.estimatedLodgingCostPerDay = foundDestination.estimatedLodgingCostPerDay;
+            trip.estimatedFlightCostPerPerson = foundDestination.estimatedFlightCostPerPerson;
+            trip.image = foundDestination.image;
+            trip.alt = foundDestination.alt;
+        })
     }
 }
 
-function whichTripsToDisplay(tripStatus) {
-    tripsToDisplay = user.trips.filter(userTrip => userTrip.status === tripStatus)
+function findAmountSpentOnAYear(totapTrips) {
+        let totalSpentForATrip = totapTrips.reduce((totalPrice, trip) => {
+            let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
+            let totalPricePerPerson = (costPerDuration += trip.estimatedFlightCostPerPerson);
+            let totalPriceForTheTrip = (totalPricePerPerson * trip.travelers)
+            totalPrice += totalPriceForTheTrip;
+            return totalPrice
+        }, 0)
+        domUpdates.tellMeYourMoneys(totalSpentForATrip * 1.1)
 }
 
-function clickLog() {
-    console.log("user", user)
-    console.log(user.trips)
+function clickLog(event) {
+    domUpdates.populateCards(user.searchApprovedTrips(event.target.classList.value))
 }
 
 export default fetchSetter;
