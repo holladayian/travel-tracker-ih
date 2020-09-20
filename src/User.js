@@ -17,14 +17,22 @@ class User {
     searchApprovedTrips(timeFrame) {
         let today = moment(Date.now());
         let searchedTrips;
-        if (timeFrame === 'current') {
-            searchedTrips = this.trips.filter(trip => today.isAfter(moment(trip.date)) && moment(trip.date).add(trip.duration, 'day').isBefore(today))
+        if (timeFrame === 'present') {
+            searchedTrips = this.trips.filter(trip => {
+                if (moment(trip.date).isBefore(today) && moment(trip.date).add(trip.duration, 'day').isAfter(today)) {
+                    return trip
+                }
+            })
         } else if (timeFrame === 'upcoming') {
-            searchedTrips =  this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isAfter(today))
+            searchedTrips =  this.trips.filter(trip => {
+                if(moment(trip.date).add(trip.duration, 'day').isAfter(today && trip.status === 'approved')) {
+                    return trip
+                }})
         } else if (timeFrame === 'past') {
             searchedTrips = this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isBefore(today))
         } else if (timeFrame === 'pending') {
-            searchTrips = this.searchPendingTrips()
+            // console.log('this.searchPendingTrips()', this.searchPendingTrips())
+            searchedTrips = this.searchPendingTrips()
         }
         return searchedTrips
     }
