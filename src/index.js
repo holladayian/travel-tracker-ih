@@ -21,14 +21,12 @@ function fetchStuff() {
 
     Promise.all([promisededUser, promisededAllTrips, promisededAllDestinations])
     .then(values => {
-        // console.log(values)
         fetchSetter.setUserData(values[0]);
         fetchSetter.setUserTrips(values[1].trips, values[0]);
         fetchSetter.setDestinations(values[2].destinations);
         fetchSetter.fixTerribleData();
         findAmountSpentOnAYear(user.trips);
     })
-    // fetcher.fetchDestination();
 }
 
 let fetchSetter = {
@@ -53,12 +51,10 @@ let fetchSetter = {
             trip.image = foundDestination.image;
             trip.alt = foundDestination.alt;
         })
-        console.log(user.trips)
     }
 }
 
 function findAmountSpentOnAYear(totapTrips) {
-    console.log('totapTrips', totapTrips)
         let totalSpentForATrip = totapTrips.reduce((totalPrice, trip) => {
             let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
             let totalPricePerPerson = (costPerDuration += trip.estimatedFlightCostPerPerson);
@@ -69,19 +65,8 @@ function findAmountSpentOnAYear(totapTrips) {
         domUpdates.tellMeYourMoneys(totalSpentForATrip * 1.1)
 }
 
-function whichTripsToDisplay(tripStatus) {
-    tripsToDisplay = user.trips.filter(userTrip => userTrip.status === tripStatus)
-}
-
 function clickLog(event) {
-    // console.log("user", user)
-    // console.log("fetchSetter.fixTerribleData()", fetchSetter.fixTerribleData())
-    // console.log("user.trips", user.trips)
-    // console.log('user.searchApprovedTrips(event.target.classList)', user.searchApprovedTrips(event.target.classList))
     domUpdates.populateCards(user.searchApprovedTrips(event.target.classList.value))
-
-    // if(event.target.class)
 }
 
 export default fetchSetter;
-// export default allDestinations;

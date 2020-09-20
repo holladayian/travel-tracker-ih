@@ -32,7 +32,6 @@ class User {
         } else if (timeFrame === 'past') {
             searchedTrips = this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isBefore(today))
         } else if (timeFrame === 'pending') {
-            // console.log('this.searchPendingTrips()', this.searchPendingTrips())
             searchedTrips = this.searchPendingTrips()
         }
         return searchedTrips

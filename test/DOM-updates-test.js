@@ -3,8 +3,6 @@ const expect = chai.expect;
 const spies = require('chai-spies');
 import domUpdates from './DOM-updates.js';
 
-// import { expect } from 'chai';
-
 chai.use(spies);
 
 describe('domUpdates', () => {

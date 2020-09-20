@@ -3,7 +3,6 @@ let domUpdates = {
 
     populateCards(filteredTrips) {
         if(filteredTrips) {
-            console.log(filteredTrips);
             let cardArea = document.querySelector('.card-area');
             cardArea.innerHTML = '';
             filteredTrips.forEach(trip => {
@@ -36,9 +35,6 @@ let domUpdates = {
         let totalYearlySpending = document.querySelector('.total-yearly-spending');
         totalYearlySpending.innerHTML = `You've spent ${roundedTotal} this year`
     }
-
-
-
 }
 
 export default domUpdates;
