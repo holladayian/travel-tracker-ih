@@ -138,7 +138,7 @@ function validateForm() {
 
     function calculateTripCost(desiredTrip, desiredDestination) {
         let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
-        let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
+        let totalPricePerPerson = costPerDuration + desiredDestination.estimatedFlightCostPerPerson;
         let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
         domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
     }
