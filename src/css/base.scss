@@ -115,13 +115,13 @@ select {
   flex-direction: column;
   justify-content: center;
   background-color: rgb(94, 156, 58);
-  width: 375px;
+  width: 425px;
   border: saddlebrown solid 2px;
 }
 
 .selected-location {
   width: 255px;
-  height: 235px;
+  height: auto;
   border: saddlebrown solid 2px;
 }
 
