@@ -121,7 +121,9 @@ function validateForm() {
     }
 
     function gatherCompletedTrip(date, duration, travelers, destinationID) {
-        let foundDestination = allDestinations.find(singleDestination => singleDestination.id === destinationID);
+        let foundDestination = allDestinations.find(singleDestination => singleDestination.id === +destinationID);
+        console.log('allDestinations', allDestinations)
+        console.log('foundDestination', foundDestination)
         let completedTrip = {
             gatheredDate: date,
             gatheredDuration: duration,
@@ -130,7 +132,7 @@ function validateForm() {
             gatheredImage: foundDestination.image,
             gatheredAlt: foundDestination.alt
         }
-        domUpdates.displayTripCost(completedTrip);
+        // domUpdates.displayTripCost(completedTrip);
         calculateTripCost(completedTrip, foundDestination)
     }
 
