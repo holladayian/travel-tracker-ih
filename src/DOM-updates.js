@@ -46,6 +46,10 @@ let domUpdates = {
             `)
         }) 
 
+    },
+
+    displayTripCost(trip) {
+
     }
 }
 

@@ -10,13 +10,13 @@ const moment = require('moment');
 
 
 let selectionBox = document.querySelector('.selection-box');
-let bookTrip = document.querySelector('.book-trip');
+let calculateCost = document.querySelector('.calculate-cost');
 
 let tripsToDisplay, allDestinations, user;
 
 window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
-bookTrip.addEventListener('click', validateForm);
+calculateCost.addEventListener('click', validateForm);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
@@ -117,7 +117,28 @@ function validateForm() {
         console.log('selectedDuration.value', selectedDuration.value);
         console.log('selectedTravelers.value', selectedTravelers.value);
         console.log('selectedDestination', selectedDestination.value.split(".")[0]);
+        gatherCompletedTrip(selectedDate.value, selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
+    }
 
+    function gatherCompletedTrip(date, duration, travelers, destinationID) {
+        let foundDestination = allDestinations.find(singleDestination => singleDestination.id === destinationID);
+        let completedTrip = {
+            gatheredDate: date,
+            gatheredDuration: duration,
+            gatheredTravelers: travelers,
+            gatheredDestination: destinationID,
+            gatheredImage: foundDestination.image,
+            gatheredAlt: foundDestination.alt
+        }
+        domUpdates.displayTripCost(completedTrip);
+        calculateTripCost(completedTrip, foundDestination)
+    }
+
+    function calculateTripCost(desiredTrip, desiredDestination) {
+        let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
+        let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
+        let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
+        domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
     }
 }
 
