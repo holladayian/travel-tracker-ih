@@ -12,7 +12,7 @@ const moment = require('moment');
 let selectionBox = document.querySelector('.selection-box');
 let calculateCost = document.querySelector('.calculate-cost');
 
-let tripsToDisplay, allDestinations, user;
+let requestedTripObject, allDestinations, user;
 
 window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
@@ -20,6 +20,7 @@ calculateCost.addEventListener('click', validateForm);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
+    // should pass in number as variabler to be dynamiv for laters
     let promisededAllTrips = fetcher.fetchTripsForAUser();
     let promisededAllDestinations = fetcher.fetchDestination();
 
@@ -117,13 +118,13 @@ function validateForm() {
         console.log('selectedDuration.value', selectedDuration.value);
         console.log('selectedTravelers.value', selectedTravelers.value);
         console.log('selectedDestination', selectedDestination.value.split(".")[0]);
-        gatherCompletedTrip(selectedDate.value, selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
+        gatherCompletedTrip(moment(selectedDate.value).format('YYYY/MM/DD'), selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
     }
 
     function gatherCompletedTrip(date, duration, travelers, destinationID) {
         let foundDestination = allDestinations.find(singleDestination => singleDestination.id === +destinationID);
-        console.log('allDestinations', allDestinations)
-        console.log('foundDestination', foundDestination)
+        // console.log('allDestinations', allDestinations)
+        // console.log('foundDestination', foundDestination)
         let completedTrip = {
             gatheredDate: date,
             gatheredDuration: duration,
@@ -133,7 +134,8 @@ function validateForm() {
             gatheredAlt: foundDestination.alt
         }
         domUpdates.displayTripImage(foundDestination.image, foundDestination.alt);
-        calculateTripCost(completedTrip, foundDestination)
+        calculateTripCost(completedTrip, foundDestination);
+        buildATrip(completedTrip);
     }
 
     function calculateTripCost(desiredTrip, desiredDestination) {
@@ -141,6 +143,34 @@ function validateForm() {
         let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
         let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
         domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
+    }
+
+    // findNewTripID(allTrips) {
+    //     let highestID = allTrips.sort((lowerTripId, higherTripId) => {
+    //         return lowerTripId.id + higherTripId.id
+    //     })[0].id;
+    //     return (highestID + 1)
+    // }
+
+    function buildATrip(desiredTrip) {
+        // let promisedAllTrips = fetcher.fetchTripsForAUser();
+
+        requestedTripObject = {
+            id: Date.now(),
+            userID: user.id,
+            destinationID: desiredTrip.gatheredDestination,
+            travelers: desiredTrip.gatheredTravelers,
+            date: desiredTrip.gatheredDate,
+            duration: desiredTrip.gatheredDuration,
+            status: 'pending',
+            suggestedActivities: []
+        }
+        console.log(requestedTripObject)
+        // fetcher.fetchTripRequest(findNewTripID(promisedAllTrips))
+        // let requestedTrip = fetcher.postARequestedTrip();
+
+        // Promise.all([promisedAllTrips, requestedTrip])
+            // .then()
     }
 }
 
