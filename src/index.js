@@ -24,12 +24,12 @@ function fetchStuff() {
     let promisededAllDestinations = fetcher.fetchDestination();
 
     Promise.all([promisededUser, promisededAllTrips, promisededAllDestinations])
-    .then(values => {
-        fetchSetter.setUserData(values[0]);
-        fetchSetter.setUserTrips(values[1].trips, values[0]);
-        fetchSetter.setDestinations(values[2].destinations);
-        fetchSetter.fixTerribleData();
-        findAmountSpentOnAYear(user.trips);
+        .then(values => {
+            fetchSetter.setUserData(values[0]);
+            fetchSetter.setUserTrips(values[1].trips, values[0]);
+            fetchSetter.setDestinations(values[2].destinations);
+            fetchSetter.fixTerribleData();
+            findAmountSpentOnAYear(user.trips);
     })
 }
 
@@ -132,7 +132,7 @@ function validateForm() {
             gatheredImage: foundDestination.image,
             gatheredAlt: foundDestination.alt
         }
-        // domUpdates.displayTripCost(completedTrip);
+        domUpdates.displayTripImage(foundDestination.image, foundDestination.alt);
         calculateTripCost(completedTrip, foundDestination)
     }
 
