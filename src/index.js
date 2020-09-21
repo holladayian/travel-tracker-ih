@@ -8,6 +8,10 @@ const moment = require('moment');
 let selectionBox = document.querySelector('.selection-box');
 let calculateCost = document.querySelector('.calculate-cost');
 let bookTripButton = document.querySelector('.book-requested-trip');
+let requestsButton = document.querySelector('.request-button');
+let tripsButton = document.querySelector('.trips-button');
+let viewTrips = document.querySelector('.trips');
+let viewRequests = document.querySelector('.requests');
 
 let wantedTrip, allDestinations, user;
 
@@ -15,6 +19,8 @@ window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
 calculateCost.addEventListener('click', validateForm);
 bookTripButton.addEventListener('click', bookRequestedTrip);
+requestsButton.addEventListener('click', showRequests);
+tripsButton.addEventListener('click', showTrips);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
@@ -29,6 +35,21 @@ function fetchStuff() {
             fetchSetter.fixTerribleData();
             findAmountSpentOnAYear(user.trips);
     })
+}
+
+function showRequests() {
+    requestsButton.classList.add('hidden');
+    tripsButton.classList.remove('hidden');
+    viewTrips.classList.add('hidden');
+    viewRequests.classList.remove('hidden');
+}
+
+function showTrips() {
+    console.log('why')
+    requestsButton.classList.remove('hidden');
+    tripsButton.classList.add('hidden');
+    viewTrips.classList.remove('hidden');
+    viewRequests.classList.add('hidden');
 }
 
 let fetchSetter = {
