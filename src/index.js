@@ -11,12 +11,15 @@ const moment = require('moment');
 
 let selectionBox = document.querySelector('.selection-box');
 let calculateCost = document.querySelector('.calculate-cost');
+let bookTripButton = document.querySelector('.book-requested-trip');
+// const calculateCost = document.querySelector('.calculate-cost');
 
 let requestedTripObject, allDestinations, user;
 
 window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
 calculateCost.addEventListener('click', validateForm);
+bookTripButton.addEventListener('click', bookRequestedTrip);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
@@ -120,6 +123,7 @@ function validateForm() {
         console.log('selectedDestination', selectedDestination.value.split(".")[0]);
         gatherCompletedTrip(moment(selectedDate.value).format('YYYY/MM/DD'), selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
     }
+}
 
     function gatherCompletedTrip(date, duration, travelers, destinationID) {
         let foundDestination = allDestinations.find(singleDestination => singleDestination.id === +destinationID);
@@ -157,21 +161,33 @@ function validateForm() {
 
         requestedTripObject = {
             id: Date.now(),
-            userID: user.id,
-            destinationID: desiredTrip.gatheredDestination,
-            travelers: desiredTrip.gatheredTravelers,
+            userID: +user.id,
+            destinationID: +desiredTrip.gatheredDestination,
+            travelers: +desiredTrip.gatheredTravelers,
             date: desiredTrip.gatheredDate,
-            duration: desiredTrip.gatheredDuration,
+            duration: +desiredTrip.gatheredDuration,
             status: 'pending',
             suggestedActivities: []
         }
         console.log(requestedTripObject)
-        // fetcher.fetchTripRequest(findNewTripID(promisedAllTrips))
-        // let requestedTrip = fetcher.postARequestedTrip();
-
-        // Promise.all([promisedAllTrips, requestedTrip])
-            // .then()
+            bookTripButton.classList.remove('hidden')
     }
-}
+
+    function bookRequestedTrip() {
+        let int = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestedTripObject)
+        };
+        
+        let requestedTrip = fetcher.fetchTripRequest(int);
+        Promise.all([requestedTrip])
+            .then(fetchStuff())
+        console.log(requestedTripObject)
+    }
+
+
 
 export default fetchSetter;
