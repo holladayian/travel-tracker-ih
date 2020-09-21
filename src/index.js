@@ -93,12 +93,12 @@ function validateForm() {
         dateError.classList.remove('hidden');
         validated = false;
     }
-    if (!selectedDuration.value || isNaN(+selectedDuration.value)) {
+    if (!selectedDuration.value || isNaN(+selectedDuration.value) || +selectedDuration.value < 1) {
     // if (!selectedDuration.value || typeof(+selectedDuration.value) !== 'number') {
         durationError.classList.remove('hidden');
         validated = false;
     }
-    if (!selectedTravelers.value || isNaN(+selectedTravelers.value)) {
+    if (!selectedTravelers.value || isNaN(+selectedTravelers.value) || +selectedTravelers.value < 0) {
     // if (!selectedTravelers.value || typeof(+selectedTravelers.value) !== 'number') {
         travelersError.classList.remove('hidden');
         validated = false;
