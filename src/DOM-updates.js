@@ -46,6 +46,12 @@ let domUpdates = {
             `)
         }) 
 
+    },
+
+    displayTripCost(trip) {
+        let roundedTotal = (Math.round(trip * 100) / 100)
+        const estimatedCost = document.querySelector('.estimated-cost');
+        estimatedCost.innerHTML = `Estimated Cost: ${roundedTotal}`
     }
 }
 

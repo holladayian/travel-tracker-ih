@@ -10,13 +10,13 @@ const moment = require('moment');
 
 
 let selectionBox = document.querySelector('.selection-box');
-let bookTrip = document.querySelector('.book-trip');
+let calculateCost = document.querySelector('.calculate-cost');
 
 let tripsToDisplay, allDestinations, user;
 
 window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
-bookTrip.addEventListener('click', validateForm);
+calculateCost.addEventListener('click', validateForm);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
@@ -80,14 +80,15 @@ function clickLog(event) {
 }
 
 function validateForm() {
-    let validated = false;
-    let selectedDate = document.querySelector('.input-date');
-    let selectedDuration = document.querySelector('.input-duration');
-    let selectedTravelers = document.querySelector('.input-travelers');
-    let selectedDestination = document.querySelector('.input-destination');
-    let dateError = document.querySelector('.date-error');
-    let durationError = document.querySelector('.duration-error');
-    let travelersError = document.querySelector('.travelers-error');
+    let validated = true;
+    // let validated = false;
+    const selectedDate = document.querySelector('.input-date');
+    const selectedDuration = document.querySelector('.input-duration');
+    const selectedTravelers = document.querySelector('.input-travelers');
+    const selectedDestination = document.querySelector('.input-destination');
+    const dateError = document.querySelector('.date-error');
+    const durationError = document.querySelector('.duration-error');
+    const travelersError = document.querySelector('.travelers-error');
     // let destinationError = document.querySelector('.destination-error');
     dateError.classList.add('hidden');
     durationError.classList.add('hidden');
@@ -96,27 +97,50 @@ function validateForm() {
     if (!moment(selectedDate.value)._isValid || moment(selectedDate.value).isBefore(moment(Date.now()))) {
         dateError.classList.remove('hidden');
         validated = false;
-    } else {
-        validated = true;
+    // } else {
+    //     validated = true;
     }
-    if (isNaN(selectedDuration.value)) {
+    if (!selectedDuration.value || typeof(+selectedDuration.value) !== 'number') {
         durationError.classList.remove('hidden');
         validated = false;
-    } else {
-        validated = true;
+    // } else {
+    //     validated = true;
     }
-    if (isNaN(selectedTravelers.value)) {
+    if (!selectedTravelers.value || typeof(+selectedTravelers.value) !== 'number') {
         travelersError.classList.remove('hidden');
         validated = false;
-    } else {
-        validated = true;
+    // } else {
+    //     validated = true;
     }
     if (validated) {
         console.log('selectedDate.value', selectedDate.value);
         console.log('selectedDuration.value', selectedDuration.value);
         console.log('selectedTravelers.value', selectedTravelers.value);
         console.log('selectedDestination', selectedDestination.value.split(".")[0]);
+        gatherCompletedTrip(selectedDate.value, selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
+    }
 
+    function gatherCompletedTrip(date, duration, travelers, destinationID) {
+        let foundDestination = allDestinations.find(singleDestination => singleDestination.id === +destinationID);
+        console.log('allDestinations', allDestinations)
+        console.log('foundDestination', foundDestination)
+        let completedTrip = {
+            gatheredDate: date,
+            gatheredDuration: duration,
+            gatheredTravelers: travelers,
+            gatheredDestination: destinationID,
+            gatheredImage: foundDestination.image,
+            gatheredAlt: foundDestination.alt
+        }
+        // domUpdates.displayTripCost(completedTrip);
+        calculateTripCost(completedTrip, foundDestination)
+    }
+
+    function calculateTripCost(desiredTrip, desiredDestination) {
+        let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
+        let totalPricePerPerson = costPerDuration + desiredDestination.estimatedFlightCostPerPerson;
+        let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
+        domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
     }
 }
 

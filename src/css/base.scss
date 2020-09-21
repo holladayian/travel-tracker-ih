@@ -97,9 +97,9 @@ select {
   grid-template-rows: 1fr 1fr;
 }
 
-.book-trip {
+.calculate-cost {
   margin: 10px;
-  width: 95px
+  width: 115px
 }
 
 .trip-selection {
@@ -131,5 +131,12 @@ select {
   justify-content: space-between;
   align-items: center;
   margin: 10px
+}
+
+.trip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
