@@ -133,3 +133,10 @@ select {
   margin: 10px
 }
 
+.trip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
