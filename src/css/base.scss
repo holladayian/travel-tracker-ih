@@ -14,7 +14,12 @@ justify-content: space-between;
 }
 
 input {
-  height: 25px
+  height: 22px
+}
+
+select {
+  @extend input;
+  width: 155px
 }
 
 .trips {

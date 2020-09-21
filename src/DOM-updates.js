@@ -34,6 +34,18 @@ let domUpdates = {
         let roundedTotal = (Math.round(totalYearlySpent * 100) / 100)
         let totalYearlySpending = document.querySelector('.total-yearly-spending');
         totalYearlySpending.innerHTML = `You've spent ${roundedTotal} this year`
+    },
+
+    updateListBox(destinationNames) {
+        let destinationList = document.querySelector('.input-destination');
+
+        destinationNames.forEach(destinationName => {
+            destinationList.insertAdjacentHTML('afterbegin', 
+            `
+            <option id="${destinationName.id}">${destinationName.id}. ${destinationName.destination}</option>
+            `)
+        }) 
+
     }
 }
 

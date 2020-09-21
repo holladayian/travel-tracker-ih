@@ -6,13 +6,17 @@ import './css/base.scss';
 import fetcher from './fetch.js';
 import User from './User.js';
 import domUpdates from './DOM-updates.js';
+const moment = require('moment');
+
 
 let selectionBox = document.querySelector('.selection-box');
+let bookTrip = document.querySelector('.book-trip');
 
 let tripsToDisplay, allDestinations, user;
 
 window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
+bookTrip.addEventListener('click', validateForm);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
@@ -40,6 +44,12 @@ let fetchSetter = {
 
     setDestinations(fetchedDestinations) {
         allDestinations = fetchedDestinations;
+        domUpdates.updateListBox(allDestinations.map(location => {
+            return {
+                destination: location.destination,
+                id: location.id
+            }
+        }))
     },
 
     fixTerribleData() {
@@ -67,6 +77,47 @@ function findAmountSpentOnAYear(totapTrips) {
 
 function clickLog(event) {
     domUpdates.populateCards(user.searchApprovedTrips(event.target.classList.value))
+}
+
+function validateForm() {
+    let validated = false;
+    let selectedDate = document.querySelector('.input-date');
+    let selectedDuration = document.querySelector('.input-duration');
+    let selectedTravelers = document.querySelector('.input-travelers');
+    let selectedDestination = document.querySelector('.input-destination');
+    let dateError = document.querySelector('.date-error');
+    let durationError = document.querySelector('.duration-error');
+    let travelersError = document.querySelector('.travelers-error');
+    // let destinationError = document.querySelector('.destination-error');
+    dateError.classList.add('hidden');
+    durationError.classList.add('hidden');
+    travelersError.classList.add('hidden');
+    // destinationError.classList.add('hidden');
+    if (!moment(selectedDate.value)._isValid || moment(selectedDate.value).isBefore(moment(Date.now()))) {
+        dateError.classList.remove('hidden');
+        validated = false;
+    } else {
+        validated = true;
+    }
+    if (isNaN(selectedDuration.value)) {
+        durationError.classList.remove('hidden');
+        validated = false;
+    } else {
+        validated = true;
+    }
+    if (isNaN(selectedTravelers.value)) {
+        travelersError.classList.remove('hidden');
+        validated = false;
+    } else {
+        validated = true;
+    }
+    if (validated) {
+        console.log('selectedDate.value', selectedDate.value);
+        console.log('selectedDuration.value', selectedDuration.value);
+        console.log('selectedTravelers.value', selectedTravelers.value);
+        console.log('selectedDestination', selectedDestination.value.split(".")[0]);
+
+    }
 }
 
 export default fetchSetter;
