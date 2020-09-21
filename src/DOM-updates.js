@@ -42,7 +42,7 @@ let domUpdates = {
         destinationNames.forEach(destinationName => {
             destinationList.insertAdjacentHTML('afterbegin', 
             `
-            <option>${destinationName}</option>
+            <option id="${destinationName.id}">${destinationName.id}. ${destinationName.destination}</option>
             `)
         }) 
 

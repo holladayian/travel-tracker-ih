@@ -44,7 +44,12 @@ let fetchSetter = {
 
     setDestinations(fetchedDestinations) {
         allDestinations = fetchedDestinations;
-        domUpdates.updateListBox(allDestinations.map(location => location.destination))
+        domUpdates.updateListBox(allDestinations.map(location => {
+            return {
+                destination: location.destination,
+                id: location.id
+            }
+        }))
     },
 
     fixTerribleData() {
@@ -83,31 +88,35 @@ function validateForm() {
     let dateError = document.querySelector('.date-error');
     let durationError = document.querySelector('.duration-error');
     let travelersError = document.querySelector('.travelers-error');
-    let destinationError = document.querySelector('.destination-error');
+    // let destinationError = document.querySelector('.destination-error');
     dateError.classList.add('hidden');
     durationError.classList.add('hidden');
     travelersError.classList.add('hidden');
-    destinationError.classList.add('hidden');
+    // destinationError.classList.add('hidden');
     if (!moment(selectedDate.value)._isValid || moment(selectedDate.value).isBefore(moment(Date.now()))) {
         dateError.classList.remove('hidden');
         validated = false;
     } else {
         validated = true;
     }
-    if (!isNaN(selectedDuration.value)) {
+    if (isNaN(selectedDuration.value)) {
         durationError.classList.remove('hidden');
         validated = false;
     } else {
         validated = true;
     }
-    if (!isNaN(selectedTravelers.value)) {
+    if (isNaN(selectedTravelers.value)) {
         travelersError.classList.remove('hidden');
         validated = false;
     } else {
         validated = true;
     }
     if (validated) {
-        console.log('validated')
+        console.log('selectedDate.value', selectedDate.value);
+        console.log('selectedDuration.value', selectedDuration.value);
+        console.log('selectedTravelers.value', selectedTravelers.value);
+        console.log('selectedDestination', selectedDestination.value.split(".")[0]);
+
     }
 }
 
