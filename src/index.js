@@ -12,6 +12,10 @@ let requestsButton = document.querySelector('.request-button');
 let tripsButton = document.querySelector('.trips-button');
 let viewTrips = document.querySelector('.trips');
 let viewRequests = document.querySelector('.requests');
+let loginUserName = document.querySelector('.username');
+let loginPassword = document.querySelector('.password');
+let loginButton = document.querySelector('.login-button');
+
 
 let wantedTrip, allDestinations, user;
 
@@ -21,6 +25,7 @@ calculateCost.addEventListener('click', validateForm);
 bookTripButton.addEventListener('click', bookRequestedTrip);
 requestsButton.addEventListener('click', showRequests);
 tripsButton.addEventListener('click', showTrips);
+loginButton.addEventListener('click', validateLogIn);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
@@ -178,6 +183,15 @@ function bookRequestedTrip() {
     Promise.all([requestedTrip])
         .then(fetchStuff())
     // console.log(requestedTrip)
+}
+
+function validateLogIn() {
+    let loginArea = document.querySelector('.login');
+    if (loginUserName.value === 'traveler50' && loginPassword.value === 'travel2020') {
+        loginArea.classList.add('hidden');
+        requestsButton.classList.remove('hidden');
+        viewTrips.classList.remove('hidden');
+    }
 }
 
 
