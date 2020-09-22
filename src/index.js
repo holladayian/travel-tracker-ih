@@ -98,14 +98,15 @@ let fetchSetter = {
 }
 
 function findAmountSpentOnAYear(totalTrips) {
-    let totalSpentForATrip = totalTrips.reduce((totalPrice, trip) => {
+    let totalSpentForAYear = totalTrips.reduce((totalPrice, trip) => {
         let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
         let totalPricePerPerson = (costPerDuration + trip.estimatedFlightCostPerPerson);
         let totalPriceForTheTrip = (totalPricePerPerson * trip.travelers)
         totalPrice += totalPriceForTheTrip;
         return totalPrice
-    }, 0)
-    domUpdates.tellMeYourMoneys(totalSpentForATrip * 1.1)
+    }, 0);
+    let roundedTotalWithFee = (Math.round((totalSpentForAYear * 1.1) * 100) / 100)
+    domUpdates.tellMeYourMoneys(roundedTotalWithFee)
 }
 
 function clickLog(event) {

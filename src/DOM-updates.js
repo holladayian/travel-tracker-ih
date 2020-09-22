@@ -31,9 +31,8 @@ let domUpdates = {
     },
 
     tellMeYourMoneys(totalYearlySpent) {
-        let roundedTotal = (Math.round(totalYearlySpent * 100) / 100)
         let totalYearlySpending = document.querySelector('.total-yearly-spending');
-        totalYearlySpending.innerHTML = `You've spent ${roundedTotal} this year`
+        totalYearlySpending.innerHTML = `You've spent ${totalYearlySpent} this year`
     },
 
     updateListBox(destinationNames) {

@@ -53,6 +53,10 @@ describe('User', () => {
             expect(user.searchTrips('pending').length).to.equal(1);
        }),
 
+    //     it('should not be able to search future trips', () => {
+    //         expect(user.searchTrips('future').length).to.be(undefined);
+    //    }),
+
         it('should have a helper function to search pending trips', () => {
             expect(user.searchPendingTrips(sampleToday).length).to.equal(1)
         }),
