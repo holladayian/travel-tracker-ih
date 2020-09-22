@@ -140,3 +140,37 @@ select {
   align-items: center;
 }
 
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.login-area {
+  margin-top: 125px;
+  background-color: rgb(94, 156, 58);
+  height: 175px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: flex-end;
+  padding: 10px;
+  border: saddlebrown solid 2px;
+  // align-items: space-between;
+}
+
+.login-username {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px
+}
+
+.login-password {
+  @extend .login-username;
+  margin-bottom: 30px;
+}
+
+  .login-button {
+    width: 65px
+  }

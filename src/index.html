@@ -7,11 +7,25 @@
     <header>
       <h1>Travel Tracker</h1>
       <section>
-        <button class="request-button">Request</button>
+        <button class="request-button hidden">Request</button>
         <button class="trips-button hidden">Trips</button>
       </section>
     </header>
-    <section class="trips">
+    <section class="login">
+      <section class="login-area">
+        <section class="login-username">
+          <label for="username">Username:</label>
+          <input class="username" id="username" type="text">
+        </section>
+        <section class="login-password">
+          <label for="password">Password:</label>
+          <input class="password" id="password" type="text">
+        </section>
+        <button class="login-button">Login</button>
+      </section>
+    </section>
+
+    <section class="trips hidden">
       <h2 class="welcome-message">Welcome User</h2>
       <h3 class="total-yearly-spending">This Year, You have Spent Your Life Savings!</h3>
       <section class="selection-box">
