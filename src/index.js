@@ -16,6 +16,9 @@ let loginUserName = document.querySelector('.username');
 let loginPassword = document.querySelector('.password');
 let loginButton = document.querySelector('.login-button');
 
+let selectedDestination = document.querySelector('.input-destination');
+
+
 
 let wantedTrip, allDestinations, user, allUsers;
 
@@ -112,7 +115,11 @@ function findAmountSpentOnAYear(totalTrips) {
 }
 
 function selectTimeOfTrips(event) {
-    domUpdates.populateCards(user.searchTrips(event.target.classList.value))
+    let selector = 'pending';
+    if (event) {
+        selector = event.target.classList.value
+    }
+    domUpdates.populateCards(user.searchTrips(selector))
 }
 
 function validateForm() {
@@ -120,7 +127,7 @@ function validateForm() {
     const selectedDate = document.querySelector('.input-date');
     const selectedDuration = document.querySelector('.input-duration');
     const selectedTravelers = document.querySelector('.input-travelers');
-    const selectedDestination = document.querySelector('.input-destination');
+    // const selectedDestination = document.querySelector('.input-destination');
     const dateError = document.querySelector('.date-error');
     const durationError = document.querySelector('.duration-error');
     const travelersError = document.querySelector('.travelers-error');
@@ -144,7 +151,7 @@ function validateForm() {
         gatherCompletedTrip(
             moment(selectedDate.value).format('YYYY/MM/DD'),
             selectedDuration.value,
-            selectedTravelers.value + 1, /* plus 1 to include person booking */
+            +selectedTravelers.value + 1, /* plus 1 to include person booking */
             selectedDestination.value.split(".")[0]
         )
     }
@@ -199,6 +206,17 @@ function bookRequestedTrip() {
     let requestedTrip = fetcher.fetchTripRequest(int);
     Promise.all([requestedTrip])
         .then(fetchStuff(+user.id))
+        .then(switchBackAfterTrip())
+        .then(alert(`Your trip to ${allDestinations.find(location => location.id === wantedTrip.destinationID).destination} has been booked!`))
+
+}
+
+function switchBackAfterTrip() {
+    bookTripButton.classList.add('hidden');
+    domUpdates.hideEstimatedCosts();
+    // selectTimeOfTrips('pending');
+    showTrips();
+    selectTimeOfTrips();
 }
 
 function validateLogIn() {
