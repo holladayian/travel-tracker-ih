@@ -1,7 +1,9 @@
 import { expect } from 'chai';
 import User from '../src/User.js';
+const moment = require('moment');
 
-let sampleUser, sampleUserTrips, user;
+
+let sampleUser, sampleUserTrips, user, sampleToday;
 
 describe('User', () => {
     beforeEach(() => {
@@ -21,6 +23,7 @@ describe('User', () => {
         ];
         user = new User(sampleUser);
         user.trips = sampleUserTrips;
+        sampleToday = moment("2020/09/21");
     });
     describe('User Class', () => {
         it('should hold onto it\'s user data', () => {
@@ -34,15 +37,36 @@ describe('User', () => {
             expect(user.getTripsForAYear().length).to.equal(1)
         }),
 
-        it('should be able to search approved trips', () => {
+        it('should be able to search past trips', () => {
             expect(user.searchTrips('past').length).to.equal(5);
-            expect(user.searchTrips('current')).to.equal(undefined);
-            expect(user.searchTrips('upcoming').length).to.equal(0);
-            expect(user.searchTrips('pending').length).to.equal(1);
         }),
 
+        it('should be able to search current trips', () => {
+            expect(user.searchTrips('current')).to.equal(undefined);
+        }),
+
+        it('should be able to search upcoming trips', () => {
+            expect(user.searchTrips('upcoming').length).to.equal(0);
+       }),
+
         it('should be able to search pending trips', () => {
-            expect(user.searchPendingTrips().length).to.equal(1)
+            expect(user.searchTrips('pending').length).to.equal(1);
+       }),
+
+        it('should have a helper function to search pending trips', () => {
+            expect(user.searchPendingTrips(sampleToday).length).to.equal(1)
+        }),
+
+        it('should have a helper function to search upcoming trips', () => {
+            expect(user.searchUpcomingTrips(sampleToday).length).to.equal(0)
+        }),
+
+        it('should have a helper function to search current trips', () => {
+            expect(user.searchPresentTrips(sampleToday).length).to.equal(0)
+        }),
+
+        it('should have a helper function to search past trips', () => {
+            expect(user.searchPastTrips(sampleToday).length).to.equal(5)
         })
     })
 })
