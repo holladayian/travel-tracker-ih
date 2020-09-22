@@ -24,10 +24,10 @@
       <section class="card">
         <section class="card-header">
            <!-- should this be a header tag?  -->
-          <h5 class="start-date">start xxxx/xx/xx</h5>
-          <h5 class="end-date">end xxxx/xx/xx</h5>
-          <h5 class="party-size">Party Size: 3</h5>
-          <h5 class="price-for-trip">Tree Fiddy</h5>
+          <h4 class="start-date">start xxxx/xx/xx</h4>
+          <h4 class="end-date">end xxxx/xx/xx</h4>
+          <h4 class="party-size">Party Size: 3</h4>
+          <h4 class="price-for-trip">Tree Fiddy</h4>
         </section>
         <img src="https://d17fnq9dkz9hgj.cloudfront.net/uploads/2020/04/shelter-dog-cropped-1.jpg" alt="">
       </section>
@@ -38,36 +38,36 @@
       <button class="calculate-cost">Calculate Cost</button>
       <section class="trip-selectors">
         <section class="date-selection selection">
-          <h5>Select A Date</h5>
-          <input class="input-date" type="text">
+          <label for="input-date" class="">When would you like to leave?</label>
+          <input class="input-date" id="input-date" type="text">
+
         </section>
         <h5 class="date-error hidden">Please Provide a Propper Date</h5>
         <section class="trip-selection selection">
-          <h5>Select Trip Duration</h5>
-          <input class="input-duration" type="text">
+          <label for="input-duration" class="">How many days would you like to stay?</label>
+          <input class="input-duration" id="input-duration" type="text">
+
         </section>
         <h5 class="duration-error hidden">Please Provide The Desired Amount of Days to Travel</h5>
-
         <section class="traveler-selection selection">
-          <h5>How Many Travelers?</h5>
-          <input class="input-travelers" type="text">
+          <label for="input-travelers" class="">How many people are going with you?</label>
+          <input class="input-travelers" id="input-travelers" type="text">
         </section>
-        <h5 class="travelers-error hidden">Please Provide the Number of Travelers That Are Going</h5>
+        <p class="travelers-error hidden">Please Provide the Number of Travelers That Are Going</p>
 
         <section class="location-selection selection">
-          <h5>Where do you want to go?</h5>
-          <select class="input-destination" name="input-destination-liostbox" id=""></select>
-          <!-- <input class="input-destination" type="text"> -->
+          <label for="input-destination" class="">Where would you like to go?</label>
+          <select class="input-destination" id="input-destination" name="input-destination-liostbox" id=""></select>
         </section>
-        <h5 class="destination-error hidden">Please Provide a Desired Destination</h5>
+        <p class="destination-error hidden">Please Provide a Desired Destination</p>
 
       </section>
     </section>
-    <img class="selected-location" src="https://cdn.britannica.com/47/80547-050-8B316D38/Field-green-tea-Mount-Fuji-Shizuoka-prefecture.jpg" alt="">
+    <img class="selected-location" src="https://cdn.britannica.com/47/80547-050-8B316D38/Field-green-tea-Mount-Fuji-Shizuoka-prefecture.jpg" alt="A Super Beautiful Mountain">
     
   </section>
   <section class="trip">
-    <h5 class="estimated-cost"></h5>
+    <p class="estimated-cost"></p>
     <button class="book-requested-trip hidden">Book Trip</button>
   </section>
   </body>

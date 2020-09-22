@@ -9,7 +9,7 @@ let selectionBox = document.querySelector('.selection-box');
 let calculateCost = document.querySelector('.calculate-cost');
 let bookTripButton = document.querySelector('.book-requested-trip');
 
-let requestedTripObject, allDestinations, user;
+let wantedTrip, allDestinations, user;
 
 window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
@@ -62,10 +62,10 @@ let fetchSetter = {
     }
 }
 
-function findAmountSpentOnAYear(totapTrips) {
-    let totalSpentForATrip = totapTrips.reduce((totalPrice, trip) => {
+function findAmountSpentOnAYear(totalTrips) {
+    let totalSpentForATrip = totalTrips.reduce((totalPrice, trip) => {
         let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
-        let totalPricePerPerson = (costPerDuration += trip.estimatedFlightCostPerPerson);
+        let totalPricePerPerson = (costPerDuration + trip.estimatedFlightCostPerPerson);
         let totalPriceForTheTrip = (totalPricePerPerson * trip.travelers)
         totalPrice += totalPriceForTheTrip;
         return totalPrice
@@ -93,11 +93,13 @@ function validateForm() {
         dateError.classList.remove('hidden');
         validated = false;
     }
-    if (!selectedDuration.value || typeof(+selectedDuration.value) !== 'number') {
+    if (!selectedDuration.value || isNaN(+selectedDuration.value) || +selectedDuration.value < 1) {
+    // if (!selectedDuration.value || typeof(+selectedDuration.value) !== 'number') {
         durationError.classList.remove('hidden');
         validated = false;
     }
-    if (!selectedTravelers.value || typeof(+selectedTravelers.value) !== 'number') {
+    if (!selectedTravelers.value || isNaN(+selectedTravelers.value) || +selectedTravelers.value < 0) {
+    // if (!selectedTravelers.value || typeof(+selectedTravelers.value) !== 'number') {
         travelersError.classList.remove('hidden');
         validated = false;
     }
@@ -119,6 +121,7 @@ function gatherCompletedTrip(date, duration, travelers, destinationID) {
     domUpdates.displayTripImage(foundDestination.image, foundDestination.alt);
     calculateTripCost(completedTrip, foundDestination);
     buildATrip(completedTrip);
+    console.log(completedTrip)
 }
 
 function calculateTripCost(desiredTrip, desiredDestination) {
@@ -129,7 +132,7 @@ function calculateTripCost(desiredTrip, desiredDestination) {
 }
 
 function buildATrip(desiredTrip) {
-    requestedTripObject = {
+    wantedTrip = {
         id: Date.now(),
         userID: +user.id,
         destinationID: +desiredTrip.gatheredDestination,
@@ -155,12 +158,12 @@ function bookRequestedTrip() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(requestedTripObject)
+        body: JSON.stringify(wantedTrip)
     };
     let requestedTrip = fetcher.fetchTripRequest(int);
     Promise.all([requestedTrip])
         .then(fetchStuff())
-    // console.log(requestedTripObject)
+    // console.log(requestedTrip)
 }
 
 
