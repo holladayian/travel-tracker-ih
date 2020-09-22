@@ -185,7 +185,14 @@ function buildATrip(desiredTrip) {
         status: 'pending',
         suggestedActivities: []
     }
-    bookTripButton.classList.remove('hidden')
+  
+  function calculateTripCost(desiredTrip, desiredDestination) {
+        let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
+        let totalPricePerPerson = costPerDuration + desiredDestination.estimatedFlightCostPerPerson;
+        let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
+        domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
+    }
+        bookTripButton.classList.remove('hidden')
 }
 
 function bookRequestedTrip() {
