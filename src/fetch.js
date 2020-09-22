@@ -1,4 +1,4 @@
-import fetchSetter from './index.js';
+// import fetchSetter from './index.js';
 
 let fetcher = {
     fetchUser(id) {
@@ -22,6 +22,13 @@ let fetcher = {
         const promise = fetch(fetchedAllDestinations)
             .then(response => response.json())
         return promise
+            .catch(err => console.log('err', err))
+    },
+
+    fetchTripRequest(int) {
+        fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', int)
+            .then(response => response.json())
+            .then(data => data)
             .catch(err => console.log('err', err))
     }
 }

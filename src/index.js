@@ -1,7 +1,3 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
 import fetcher from './fetch.js';
 import User from './User.js';
@@ -11,25 +7,27 @@ const moment = require('moment');
 
 let selectionBox = document.querySelector('.selection-box');
 let calculateCost = document.querySelector('.calculate-cost');
+let bookTripButton = document.querySelector('.book-requested-trip');
 
-let tripsToDisplay, allDestinations, user;
+let requestedTripObject, allDestinations, user;
 
 window.onload = fetchStuff;
 selectionBox.addEventListener('click', clickLog);
 calculateCost.addEventListener('click', validateForm);
+bookTripButton.addEventListener('click', bookRequestedTrip);
 
 function fetchStuff() {
     let promisededUser = fetcher.fetchUser(7);
+    // should pass in number as variabler to be dynamiv for laters
     let promisededAllTrips = fetcher.fetchTripsForAUser();
     let promisededAllDestinations = fetcher.fetchDestination();
-
     Promise.all([promisededUser, promisededAllTrips, promisededAllDestinations])
-    .then(values => {
-        fetchSetter.setUserData(values[0]);
-        fetchSetter.setUserTrips(values[1].trips, values[0]);
-        fetchSetter.setDestinations(values[2].destinations);
-        fetchSetter.fixTerribleData();
-        findAmountSpentOnAYear(user.trips);
+        .then(values => {
+            fetchSetter.setUserData(values[0]);
+            fetchSetter.setUserTrips(values[1].trips, values[0]);
+            fetchSetter.setDestinations(values[2].destinations);
+            fetchSetter.fixTerribleData();
+            findAmountSpentOnAYear(user.trips);
     })
 }
 
@@ -65,14 +63,14 @@ let fetchSetter = {
 }
 
 function findAmountSpentOnAYear(totapTrips) {
-        let totalSpentForATrip = totapTrips.reduce((totalPrice, trip) => {
-            let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
-            let totalPricePerPerson = (costPerDuration += trip.estimatedFlightCostPerPerson);
-            let totalPriceForTheTrip = (totalPricePerPerson * trip.travelers)
-            totalPrice += totalPriceForTheTrip;
-            return totalPrice
-        }, 0)
-        domUpdates.tellMeYourMoneys(totalSpentForATrip * 1.1)
+    let totalSpentForATrip = totapTrips.reduce((totalPrice, trip) => {
+        let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
+        let totalPricePerPerson = (costPerDuration += trip.estimatedFlightCostPerPerson);
+        let totalPriceForTheTrip = (totalPricePerPerson * trip.travelers)
+        totalPrice += totalPriceForTheTrip;
+        return totalPrice
+    }, 0)
+    domUpdates.tellMeYourMoneys(totalSpentForATrip * 1.1)
 }
 
 function clickLog(event) {
@@ -81,7 +79,6 @@ function clickLog(event) {
 
 function validateForm() {
     let validated = true;
-    // let validated = false;
     const selectedDate = document.querySelector('.input-date');
     const selectedDuration = document.querySelector('.input-duration');
     const selectedTravelers = document.querySelector('.input-travelers');
@@ -89,59 +86,83 @@ function validateForm() {
     const dateError = document.querySelector('.date-error');
     const durationError = document.querySelector('.duration-error');
     const travelersError = document.querySelector('.travelers-error');
-    // let destinationError = document.querySelector('.destination-error');
     dateError.classList.add('hidden');
     durationError.classList.add('hidden');
     travelersError.classList.add('hidden');
-    // destinationError.classList.add('hidden');
     if (!moment(selectedDate.value)._isValid || moment(selectedDate.value).isBefore(moment(Date.now()))) {
         dateError.classList.remove('hidden');
         validated = false;
-    // } else {
-    //     validated = true;
     }
     if (!selectedDuration.value || typeof(+selectedDuration.value) !== 'number') {
         durationError.classList.remove('hidden');
         validated = false;
-    // } else {
-    //     validated = true;
     }
     if (!selectedTravelers.value || typeof(+selectedTravelers.value) !== 'number') {
         travelersError.classList.remove('hidden');
         validated = false;
-    // } else {
-    //     validated = true;
     }
     if (validated) {
-        console.log('selectedDate.value', selectedDate.value);
-        console.log('selectedDuration.value', selectedDuration.value);
-        console.log('selectedTravelers.value', selectedTravelers.value);
-        console.log('selectedDestination', selectedDestination.value.split(".")[0]);
-        gatherCompletedTrip(selectedDate.value, selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
+        gatherCompletedTrip(moment(selectedDate.value).format('YYYY/MM/DD'), selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
     }
+}
 
-    function gatherCompletedTrip(date, duration, travelers, destinationID) {
-        let foundDestination = allDestinations.find(singleDestination => singleDestination.id === +destinationID);
-        console.log('allDestinations', allDestinations)
-        console.log('foundDestination', foundDestination)
-        let completedTrip = {
-            gatheredDate: date,
-            gatheredDuration: duration,
-            gatheredTravelers: travelers,
-            gatheredDestination: destinationID,
-            gatheredImage: foundDestination.image,
-            gatheredAlt: foundDestination.alt
-        }
-        // domUpdates.displayTripCost(completedTrip);
-        calculateTripCost(completedTrip, foundDestination)
+function gatherCompletedTrip(date, duration, travelers, destinationID) {
+    let foundDestination = allDestinations.find(singleDestination => singleDestination.id === +destinationID);
+    let completedTrip = {
+        gatheredDate: date,
+        gatheredDuration: duration,
+        gatheredTravelers: travelers,
+        gatheredDestination: destinationID,
+        gatheredImage: foundDestination.image,
+        gatheredAlt: foundDestination.alt
     }
+    domUpdates.displayTripImage(foundDestination.image, foundDestination.alt);
+    calculateTripCost(completedTrip, foundDestination);
+    buildATrip(completedTrip);
+}
 
-    function calculateTripCost(desiredTrip, desiredDestination) {
+function calculateTripCost(desiredTrip, desiredDestination) {
+    let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
+    let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
+    let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
+    domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
+}
+
+function buildATrip(desiredTrip) {
+    requestedTripObject = {
+        id: Date.now(),
+        userID: +user.id,
+        destinationID: +desiredTrip.gatheredDestination,
+        travelers: +desiredTrip.gatheredTravelers,
+        date: desiredTrip.gatheredDate,
+        duration: +desiredTrip.gatheredDuration,
+        status: 'pending',
+        suggestedActivities: []
+    }
+  
+  function calculateTripCost(desiredTrip, desiredDestination) {
         let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
         let totalPricePerPerson = costPerDuration + desiredDestination.estimatedFlightCostPerPerson;
         let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
         domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
     }
+        bookTripButton.classList.remove('hidden')
 }
+
+function bookRequestedTrip() {
+    let int = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestedTripObject)
+    };
+    let requestedTrip = fetcher.fetchTripRequest(int);
+    Promise.all([requestedTrip])
+        .then(fetchStuff())
+    // console.log(requestedTripObject)
+}
+
+
 
 export default fetchSetter;

@@ -52,6 +52,12 @@ let domUpdates = {
         let roundedTotal = (Math.round(trip * 100) / 100)
         const estimatedCost = document.querySelector('.estimated-cost');
         estimatedCost.innerHTML = `Estimated Cost: ${roundedTotal}`
+    },
+
+    displayTripImage(destinationImage, destinationAlt) {
+        const selectedLocation = document.querySelector('.selected-location');
+        selectedLocation.src = destinationImage;
+        selectedLocation.alt = destinationAlt;
     }
 }
 
