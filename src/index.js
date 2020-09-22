@@ -194,7 +194,7 @@ function bookRequestedTrip() {
     };
     let requestedTrip = fetcher.fetchTripRequest(int);
     Promise.all([requestedTrip])
-        .then(fetchStuff())
+        .then(fetchStuff(+user.id))
 }
 
 function validateLogIn() {
