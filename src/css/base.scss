@@ -1,5 +1,6 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: radial-gradient(circle, rgb(197, 134, 61) 0%, rgb(37, 69, 226) 100%);
+
+@import 'src/css/mixins';
+
 
 
 body {
@@ -8,9 +9,7 @@ body {
 
 header {
 width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+@include flex-justify-direction(row, space-between);
 }
 
 input {
@@ -23,24 +22,19 @@ select {
 }
 
 .trips {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flex-align-center(column);
 }
 
 .requests {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  @include flex-align-center(row);
   justify-content: center;
 }
 
 .request-button {
   margin-top: 25px;
   margin-right: 25px;
-  width: 125px;
-  height: 35px;
-  background-color: rgb(114, 197, 65)
+  @include box-size(125px, 35px);
+  background-color: $greenish;
 }
 
 .trips-button {
@@ -48,12 +42,9 @@ select {
 }
 
 .selection-box {
-  width: 380px;
-  height: 65px;
+  @include box-size(380px, 65px);
   background-color: rgb(128, 223, 226);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  @include flex-align-center(row);
   justify-content: center;
 }
 
@@ -62,23 +53,18 @@ select {
 }
 
 .card-area {
-  display: flex;
-  flex-direction: row;
+  @include flex-align-center(row);
   flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
   margin-left: 135px;
   margin-right: 135px;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
+  @include flex-align-center(column);
   background-color: teal;
-  height: 295px;
-  width: 165px;
-  align-items: center;
-  border: saddlebrown solid 2px;
+  @include box-size(165px, 295px);
+  border: $brown-border;
   padding: 10px;
   margin: 10px
 }
@@ -89,9 +75,7 @@ select {
 }
 
 .card-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  @include grid-equal-row-columns(1fr)
 }
 
 .calculate-cost {
@@ -100,41 +84,32 @@ select {
 }
 
 .trip-selection {
-  display: flex;
-  flex-direction: column;
+  @include flex-align-center(column);
   justify-content: center;
-  align-items: center;
   margin: 25px
 }
 
 .trip-selectors {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: rgb(94, 156, 58);
+  @include flex-justify-direction(column, center);
+  background-color: $dark-green;
   width: 425px;
-  border: saddlebrown solid 2px;
+  border: $brown-border;
 }
 
 .selected-location {
-  width: 255px;
-  height: auto;
-  border: saddlebrown solid 2px;
+  @include box-size(225px, auto);
+  border: $brown-border;
 }
 
 .selection {
-  display: flex;
-  flex-direction: row;
+  @include flex-align-center(row);
   justify-content: space-between;
-  align-items: center;
   margin: 10px
 }
 
 .trip {
-  display: flex;
-  flex-direction: column;
+  @include flex-align-center(column);
   justify-content: center;
-  align-items: center;
 }
 
 .login {
@@ -144,22 +119,15 @@ select {
 
 .login-area {
   margin-top: 125px;
-  background-color: rgb(94, 156, 58);
-  height: 175px;
-  width: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  // align-items: flex-end;
+  background-color: $dark-green;
+  @include box-size(350px, 175px);
+  @include flex-justify-direction(column, center);
   padding: 10px;
-  border: saddlebrown solid 2px;
-  // align-items: space-between;
+  border: $brown-border;
 }
 
 .login-username {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include flex-justify-direction(row, space-between);
   margin: 10px
 }
 

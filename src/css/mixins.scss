@@ -1,0 +1,27 @@
+$primary-background: radial-gradient(circle, rgb(197, 134, 61) 0%, rgb(37, 69, 226) 100%);
+$brown-border: saddlebrown solid 2px;
+$greenish: rgb(114, 197, 65);
+$dark-green: rgb(94, 156, 58);
+
+@mixin flex-align-center($direction) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+}
+
+@mixin box-size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin grid-equal-row-columns($fraction) {
+  display: grid;
+  grid-template-columns: $fraction $fraction;
+  grid-template-rows: $fraction $fraction;
+}
+
+@mixin flex-justify-direction($direction, $content) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $content;
+}
