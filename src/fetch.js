@@ -1,5 +1,3 @@
-// import allUsers from './index.js';
-
 let fetcher = {
     fetchUser(id) {
         const fetchedUser = `https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${id}`
@@ -15,7 +13,7 @@ let fetcher = {
             .then(response => response.json())
         return promise
             .catch(err => console.log('err', err))
-        },
+    },
 
     fetchDestination() {
         const fetchedAllDestinations = 'https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations'
@@ -38,10 +36,6 @@ let fetcher = {
             .then(response => response.json())
         return promise
             .catch(err => console.log('err', err))
-        // fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers')
-        //     .then(response => response.json())
-        //     .then(data => allUsers = data)
-        //     .catch(err => console.log('err', err))
     }
 }
 

@@ -20,7 +20,7 @@ let loginButton = document.querySelector('.login-button');
 let wantedTrip, allDestinations, user, allUsers;
 
 window.onload = fetchAllUsers;
-selectionBox.addEventListener('click', clickLog);
+selectionBox.addEventListener('click', selectTimeOfTrips);
 calculateCost.addEventListener('click', validateForm);
 bookTripButton.addEventListener('click', bookRequestedTrip);
 requestsButton.addEventListener('click', showRequests);
@@ -38,7 +38,6 @@ function fetchAllUsers() {
 
 function fetchStuff(userID) {
     let promisededUser = fetcher.fetchUser(userID);
-    // should pass in number as variabler to be dynamiv for laters
     let promisededAllTrips = fetcher.fetchTripsForAUser();
     let promisededAllDestinations = fetcher.fetchDestination();
     Promise.all([promisededUser, promisededAllTrips, promisededAllDestinations])
@@ -48,7 +47,7 @@ function fetchStuff(userID) {
             fetchSetter.setDestinations(values[2].destinations);
             fetchSetter.fixTerribleData();
             findAmountSpentOnAYear(user.trips);
-    })
+        })
 }
 
 function showRequests() {
@@ -59,18 +58,20 @@ function showRequests() {
 }
 
 function showTrips() {
-    console.log('why')
     requestsButton.classList.remove('hidden');
     tripsButton.classList.add('hidden');
     viewTrips.classList.remove('hidden');
     viewRequests.classList.add('hidden');
 }
 
+
+// break the below functionality into a class
 let fetchSetter = {
     setUserData(fetchedUserData) {
         user = new User(fetchedUserData);
         domUpdates.greetUser(user.name)
     },
+
     setUserTrips(fetchedTrips, fetchedUser) {
         user.trips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === fetchedUser.id)
     },
@@ -98,18 +99,20 @@ let fetchSetter = {
 }
 
 function findAmountSpentOnAYear(totalTrips) {
-    let totalSpentForATrip = totalTrips.reduce((totalPrice, trip) => {
+    let totalSpentForAYear = totalTrips.reduce((totalPrice, trip) => {
         let costPerDuration = (trip.estimatedLodgingCostPerDay * trip.duration);
         let totalPricePerPerson = (costPerDuration + trip.estimatedFlightCostPerPerson);
         let totalPriceForTheTrip = (totalPricePerPerson * trip.travelers)
         totalPrice += totalPriceForTheTrip;
         return totalPrice
-    }, 0)
-    domUpdates.tellMeYourMoneys(totalSpentForATrip * 1.1)
+    }, 0);
+    let roundedTotalWithFee = (Math.round((totalSpentForAYear * 1.1) * 100) / 100)
+    // 168319.8
+    domUpdates.tellMeYourMoneys(roundedTotalWithFee.toFixed(2))
 }
 
-function clickLog(event) {
-    domUpdates.populateCards(user.searchApprovedTrips(event.target.classList.value))
+function selectTimeOfTrips(event) {
+    domUpdates.populateCards(user.searchTrips(event.target.classList.value))
 }
 
 function validateForm() {
@@ -121,6 +124,7 @@ function validateForm() {
     const dateError = document.querySelector('.date-error');
     const durationError = document.querySelector('.duration-error');
     const travelersError = document.querySelector('.travelers-error');
+    // break the following three lines into DOM-updates
     dateError.classList.add('hidden');
     durationError.classList.add('hidden');
     travelersError.classList.add('hidden');
@@ -129,17 +133,20 @@ function validateForm() {
         validated = false;
     }
     if (!selectedDuration.value || isNaN(+selectedDuration.value) || +selectedDuration.value < 1) {
-    // if (!selectedDuration.value || typeof(+selectedDuration.value) !== 'number') {
         durationError.classList.remove('hidden');
         validated = false;
     }
     if (!selectedTravelers.value || isNaN(+selectedTravelers.value) || +selectedTravelers.value < 0) {
-    // if (!selectedTravelers.value || typeof(+selectedTravelers.value) !== 'number') {
         travelersError.classList.remove('hidden');
         validated = false;
     }
     if (validated) {
-        gatherCompletedTrip(moment(selectedDate.value).format('YYYY/MM/DD'), selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
+        gatherCompletedTrip(
+            moment(selectedDate.value).format('YYYY/MM/DD'),
+            selectedDuration.value,
+            selectedTravelers.value + 1, /* plus 1 to include person booking */
+            selectedDestination.value.split(".")[0]
+        )
     }
 }
 
@@ -156,14 +163,15 @@ function gatherCompletedTrip(date, duration, travelers, destinationID) {
     domUpdates.displayTripImage(foundDestination.image, foundDestination.alt);
     calculateTripCost(completedTrip, foundDestination);
     buildATrip(completedTrip);
-    console.log(completedTrip)
 }
 
+// might be able to live in userclass
 function calculateTripCost(desiredTrip, desiredDestination) {
     let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
     let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
     let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
-    domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
+    let roundedTripWithFee = (Math.round((totalPriceForTheTrip * 1.1) * 100) / 100)
+    domUpdates.displayTripCost(roundedTripWithFee.toFixed(2))
 }
 
 function buildATrip(desiredTrip) {
@@ -197,8 +205,7 @@ function bookRequestedTrip() {
     };
     let requestedTrip = fetcher.fetchTripRequest(int);
     Promise.all([requestedTrip])
-        .then(fetchStuff())
-    // console.log(requestedTrip)
+        .then(fetchStuff(+user.id))
 }
 
 function validateLogIn() {
@@ -212,9 +219,8 @@ function validateLogIn() {
 }
 
 function checkUserName() {
-    if(loginUserName.value.split('traveler')[1]) {
+    if (loginUserName.value.split('traveler')[1]) {
         let userID = loginUserName.value.split('traveler')[1];
-        // console.log(allUsers[0].travelers)
         return allUsers[0].travelers.find(user => user.id === +userID).id
     }
 }

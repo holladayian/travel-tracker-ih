@@ -11,8 +11,10 @@ describe('domUpdates', () => {
         chai.spy.on(domUpdates, [
             'populateCards',
             'greetUser',
-            'tellMeYourMoneys'    
-            // array of domUpdate functions
+            'tellMeYourMoneys',
+            'updateListBox',
+            'displayTripCost',
+            'displayTripImage'
         ], () => true);
     });
 
@@ -33,5 +35,20 @@ describe('domUpdates', () => {
     it('should run tellMeYourMoneys', () => {
         domUpdates.tellMeYourMoneys();
         expect(domUpdates.tellMeYourMoneys).to.have.been.called(1)
+    }),
+
+    it('should run updateListBox', () => {
+        domUpdates.updateListBox();
+        expect(domUpdates.updateListBox).to.have.been.called(1)
+    }),
+
+    it('should run displayTripCost', () => {
+        domUpdates.displayTripCost();
+        expect(domUpdates.displayTripCost).to.have.been.called(1)
+    }),
+
+    it('should run displayTripImage', () => {
+        domUpdates.displayTripImage();
+        expect(domUpdates.displayTripImage).to.have.been.called(1)
     })
 })

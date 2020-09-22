@@ -1,13 +1,12 @@
-
 let domUpdates = {
 
     populateCards(filteredTrips) {
-        if(filteredTrips) {
+        if (filteredTrips) {
             let cardArea = document.querySelector('.card-area');
             cardArea.innerHTML = '';
             filteredTrips.forEach(trip => {
-                cardArea.insertAdjacentHTML('afterbegin', 
-                `
+                cardArea.insertAdjacentHTML('afterbegin',
+                    `
                 <section class="card">
                 <section class="card-header">
                    <!-- should this be a header tag?  -->
@@ -21,7 +20,7 @@ let domUpdates = {
                 `
                 )
             })
-            
+
         }
     },
 
@@ -31,27 +30,26 @@ let domUpdates = {
     },
 
     tellMeYourMoneys(totalYearlySpent) {
-        let roundedTotal = (Math.round(totalYearlySpent * 100) / 100)
         let totalYearlySpending = document.querySelector('.total-yearly-spending');
-        totalYearlySpending.innerHTML = `You've spent ${roundedTotal} this year`
+        totalYearlySpending.innerHTML = `You've spent $${totalYearlySpent} this year!`
     },
 
     updateListBox(destinationNames) {
         let destinationList = document.querySelector('.input-destination');
 
         destinationNames.forEach(destinationName => {
-            destinationList.insertAdjacentHTML('afterbegin', 
-            `
+            destinationList.insertAdjacentHTML('afterbegin',
+                `
             <option id="${destinationName.id}">${destinationName.id}. ${destinationName.destination}</option>
             `)
-        }) 
+        })
 
     },
 
     displayTripCost(trip) {
         let roundedTotal = (Math.round(trip * 100) / 100)
         const estimatedCost = document.querySelector('.estimated-cost');
-        estimatedCost.innerHTML = `Estimated Cost: ${roundedTotal}`
+        estimatedCost.innerHTML = `Estimated Cost: $${roundedTotal}`
     },
 
     displayTripImage(destinationImage, destinationAlt) {
