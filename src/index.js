@@ -20,7 +20,7 @@ let loginButton = document.querySelector('.login-button');
 let wantedTrip, allDestinations, user, allUsers;
 
 window.onload = fetchAllUsers;
-selectionBox.addEventListener('click', clickLog);
+selectionBox.addEventListener('click', selectTimeOfTrips);
 calculateCost.addEventListener('click', validateForm);
 bookTripButton.addEventListener('click', bookRequestedTrip);
 requestsButton.addEventListener('click', showRequests);
@@ -38,7 +38,6 @@ function fetchAllUsers() {
 
 function fetchStuff(userID) {
     let promisededUser = fetcher.fetchUser(userID);
-    // should pass in number as variabler to be dynamiv for laters
     let promisededAllTrips = fetcher.fetchTripsForAUser();
     let promisededAllDestinations = fetcher.fetchDestination();
     Promise.all([promisededUser, promisededAllTrips, promisededAllDestinations])
@@ -59,7 +58,6 @@ function showRequests() {
 }
 
 function showTrips() {
-    console.log('why')
     requestsButton.classList.remove('hidden');
     tripsButton.classList.add('hidden');
     viewTrips.classList.remove('hidden');
@@ -71,6 +69,7 @@ let fetchSetter = {
         user = new User(fetchedUserData);
         domUpdates.greetUser(user.name)
     },
+
     setUserTrips(fetchedTrips, fetchedUser) {
         user.trips = fetchedTrips.filter(fetchedTrip => fetchedTrip.userID === fetchedUser.id)
     },
@@ -106,10 +105,11 @@ function findAmountSpentOnAYear(totalTrips) {
         return totalPrice
     }, 0);
     let roundedTotalWithFee = (Math.round((totalSpentForAYear * 1.1) * 100) / 100)
-    domUpdates.tellMeYourMoneys(roundedTotalWithFee)
+    // 168319.8
+    domUpdates.tellMeYourMoneys(roundedTotalWithFee.toFixed(2))
 }
 
-function clickLog(event) {
+function selectTimeOfTrips(event) {
     domUpdates.populateCards(user.searchTrips(event.target.classList.value))
 }
 
@@ -130,17 +130,20 @@ function validateForm() {
         validated = false;
     }
     if (!selectedDuration.value || isNaN(+selectedDuration.value) || +selectedDuration.value < 1) {
-    // if (!selectedDuration.value || typeof(+selectedDuration.value) !== 'number') {
         durationError.classList.remove('hidden');
         validated = false;
     }
     if (!selectedTravelers.value || isNaN(+selectedTravelers.value) || +selectedTravelers.value < 0) {
-    // if (!selectedTravelers.value || typeof(+selectedTravelers.value) !== 'number') {
         travelersError.classList.remove('hidden');
         validated = false;
     }
     if (validated) {
-        gatherCompletedTrip(moment(selectedDate.value).format('YYYY/MM/DD'), selectedDuration.value, selectedTravelers.value, selectedDestination.value.split(".")[0])
+        gatherCompletedTrip(
+            moment(selectedDate.value).format('YYYY/MM/DD'),
+            selectedDuration.value,
+            selectedTravelers.value,
+            selectedDestination.value.split(".")[0]
+        )
     }
 }
 
@@ -164,7 +167,7 @@ function calculateTripCost(desiredTrip, desiredDestination) {
     let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
     let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
     let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
-    domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
+    domUpdates.displayTripCost((totalPriceForTheTrip * 1.1).toFixed(2))
 }
 
 function buildATrip(desiredTrip) {
@@ -192,7 +195,6 @@ function bookRequestedTrip() {
     let requestedTrip = fetcher.fetchTripRequest(int);
     Promise.all([requestedTrip])
         .then(fetchStuff())
-    // console.log(requestedTrip)
 }
 
 function validateLogIn() {
@@ -208,7 +210,6 @@ function validateLogIn() {
 function checkUserName() {
     if(loginUserName.value.split('traveler')[1]) {
         let userID = loginUserName.value.split('traveler')[1];
-        // console.log(allUsers[0].travelers)
         return allUsers[0].travelers.find(user => user.id === +userID).id
     }
 }
