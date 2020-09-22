@@ -12,18 +12,32 @@ let requestsButton = document.querySelector('.request-button');
 let tripsButton = document.querySelector('.trips-button');
 let viewTrips = document.querySelector('.trips');
 let viewRequests = document.querySelector('.requests');
+let loginUserName = document.querySelector('.username');
+let loginPassword = document.querySelector('.password');
+let loginButton = document.querySelector('.login-button');
 
-let wantedTrip, allDestinations, user;
 
-window.onload = fetchStuff;
+let wantedTrip, allDestinations, user, allUsers;
+
+window.onload = fetchAllUsers;
 selectionBox.addEventListener('click', clickLog);
 calculateCost.addEventListener('click', validateForm);
 bookTripButton.addEventListener('click', bookRequestedTrip);
 requestsButton.addEventListener('click', showRequests);
 tripsButton.addEventListener('click', showTrips);
+loginButton.addEventListener('click', validateLogIn);
 
-function fetchStuff() {
-    let promisededUser = fetcher.fetchUser(7);
+function fetchAllUsers() {
+    let promisedAllUsers = fetcher.fetchAllUsers()
+
+    Promise.all([promisedAllUsers])
+        .then(value => {
+            allUsers = value
+        })
+}
+
+function fetchStuff(userID) {
+    let promisededUser = fetcher.fetchUser(userID);
     // should pass in number as variabler to be dynamiv for laters
     let promisededAllTrips = fetcher.fetchTripsForAUser();
     let promisededAllDestinations = fetcher.fetchDestination();
@@ -187,6 +201,25 @@ function bookRequestedTrip() {
     // console.log(requestedTrip)
 }
 
+function validateLogIn() {
+    let loginArea = document.querySelector('.login');
+    if (checkUserName() && loginPassword.value === 'travel2020') {
+        fetchStuff(checkUserName());
+        loginArea.classList.add('hidden');
+        requestsButton.classList.remove('hidden');
+        viewTrips.classList.remove('hidden');
+    }
+}
+
+function checkUserName() {
+    if(loginUserName.value.split('traveler')[1]) {
+        let userID = loginUserName.value.split('traveler')[1];
+        // console.log(allUsers[0].travelers)
+        return allUsers[0].travelers.find(user => user.id === +userID).id
+    }
+}
+
 
 
 export default fetchSetter;
+// export default allUsers;

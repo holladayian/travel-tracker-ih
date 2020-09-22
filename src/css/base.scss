@@ -35,10 +35,6 @@ select {
   justify-content: center;
 }
 
-.hidden {
-  display: none
-}
-
 .request-button {
   margin-top: 25px;
   margin-right: 25px;
@@ -171,6 +167,10 @@ select {
   margin-bottom: 30px;
 }
 
-  .login-button {
-    width: 65px
-  }
+.login-button {
+  width: 65px
+}
+
+.hidden {
+  display: none
+}
