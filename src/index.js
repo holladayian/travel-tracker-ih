@@ -160,14 +160,14 @@ function gatherCompletedTrip(date, duration, travelers, destinationID) {
     domUpdates.displayTripImage(foundDestination.image, foundDestination.alt);
     calculateTripCost(completedTrip, foundDestination);
     buildATrip(completedTrip);
-    console.log(completedTrip)
 }
 
 function calculateTripCost(desiredTrip, desiredDestination) {
     let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
     let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
     let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
-    domUpdates.displayTripCost((totalPriceForTheTrip * 1.1).toFixed(2))
+    let roundedTripWithFee = (Math.round((totalPriceForTheTrip * 1.1) * 100) / 100)
+    domUpdates.displayTripCost(roundedTripWithFee.toFixed(2))
 }
 
 function buildATrip(desiredTrip) {

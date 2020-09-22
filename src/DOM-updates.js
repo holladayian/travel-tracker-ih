@@ -32,7 +32,7 @@ let domUpdates = {
 
     tellMeYourMoneys(totalYearlySpent) {
         let totalYearlySpending = document.querySelector('.total-yearly-spending');
-        totalYearlySpending.innerHTML = `You've spent ${totalYearlySpent} this year`
+        totalYearlySpending.innerHTML = `You've spent $${totalYearlySpent} this year!`
     },
 
     updateListBox(destinationNames) {
@@ -50,7 +50,7 @@ let domUpdates = {
     displayTripCost(trip) {
         let roundedTotal = (Math.round(trip * 100) / 100)
         const estimatedCost = document.querySelector('.estimated-cost');
-        estimatedCost.innerHTML = `Estimated Cost: ${roundedTotal}`
+        estimatedCost.innerHTML = `Estimated Cost: $${roundedTotal}`
     },
 
     displayTripImage(destinationImage, destinationAlt) {
