@@ -35,9 +35,10 @@ describe('User', () => {
         }),
 
         it('should be able to search approved trips', () => {
-            expect(user.searchApprovedTrips('past').length).to.equal(5);
-            expect(user.searchApprovedTrips('current')).to.equal(undefined);
-            expect(user.searchApprovedTrips('upcoming').length).to.equal(0);
+            expect(user.searchTrips('past').length).to.equal(5);
+            expect(user.searchTrips('current')).to.equal(undefined);
+            expect(user.searchTrips('upcoming').length).to.equal(0);
+            expect(user.searchTrips('pending').length).to.equal(1);
         }),
 
         it('should be able to search pending trips', () => {

@@ -109,7 +109,7 @@ function findAmountSpentOnAYear(totalTrips) {
 }
 
 function clickLog(event) {
-    domUpdates.populateCards(user.searchApprovedTrips(event.target.classList.value))
+    domUpdates.populateCards(user.searchTrips(event.target.classList.value))
 }
 
 function validateForm() {

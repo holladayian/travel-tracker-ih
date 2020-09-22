@@ -14,27 +14,39 @@ class User {
         return this.trips.filter(trip => moment(trip.date).isBefore(today) && moment(trip.date).isAfter(today.subtract(1, 'year')))
     }
 
-    searchApprovedTrips(timeFrame) {
+    searchTrips(timeFrame) {
         // this naming should probably change if it also calls this.searchPendingTrips()
         let today = moment(Date.now());
         let searchedTrips;
         if (timeFrame === 'present') {
-            searchedTrips = this.trips.filter(trip => {
-                if (moment(trip.date).isBefore(today) && moment(trip.date).add(trip.duration, 'day').isAfter(today)) {
-                    return trip
-                }
-            })
+            searchedTrips = this.searchPresentTrips(today)
         } else if (timeFrame === 'upcoming') {
-            searchedTrips =  this.trips.filter(trip => {
-                if(moment(trip.date).add(trip.duration, 'day').isAfter(today && trip.status === 'approved')) {
-                    return trip
-                }})
+            searchedTrips = this.searchUpcomingTrips(today)
         } else if (timeFrame === 'past') {
-            searchedTrips = this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isBefore(today))
+            searchedTrips = this.searchPastTrips(today)
         } else if (timeFrame === 'pending') {
             searchedTrips = this.searchPendingTrips()
         }
         return searchedTrips
+    }
+
+    searchPastTrips(today) {
+        return this.trips.filter(trip => moment(trip.date).add(trip.duration, 'day').isBefore(today))
+    }
+
+    searchUpcomingTrips(today) {
+        return this.trips.filter(trip => {
+            if(moment(trip.date).add(trip.duration, 'day').isAfter(today && trip.status === 'approved')) {
+                return trip
+            }})
+    }
+
+    searchPresentTrips(today) {
+        return this.trips.filter(trip => {
+            if (moment(trip.date).isBefore(today) && moment(trip.date).add(trip.duration, 'day').isAfter(today)) {
+                return trip
+            }
+        })
     }
 
     searchPendingTrips() {

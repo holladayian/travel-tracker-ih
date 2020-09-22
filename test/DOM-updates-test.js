@@ -15,7 +15,6 @@ describe('domUpdates', () => {
             'updateListBox',
             'displayTripCost',
             'displayTripImage'
-            // array of domUpdate functions
         ], () => true);
     });
 
