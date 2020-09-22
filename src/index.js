@@ -47,7 +47,7 @@ function fetchStuff(userID) {
             fetchSetter.setDestinations(values[2].destinations);
             fetchSetter.fixTerribleData();
             findAmountSpentOnAYear(user.trips);
-    })
+        })
 }
 
 function showRequests() {
@@ -64,6 +64,8 @@ function showTrips() {
     viewRequests.classList.add('hidden');
 }
 
+
+// break the below functionality into a class
 let fetchSetter = {
     setUserData(fetchedUserData) {
         user = new User(fetchedUserData);
@@ -122,6 +124,7 @@ function validateForm() {
     const dateError = document.querySelector('.date-error');
     const durationError = document.querySelector('.duration-error');
     const travelersError = document.querySelector('.travelers-error');
+    // break the following three lines into DOM-updates
     dateError.classList.add('hidden');
     durationError.classList.add('hidden');
     travelersError.classList.add('hidden');
@@ -141,7 +144,7 @@ function validateForm() {
         gatherCompletedTrip(
             moment(selectedDate.value).format('YYYY/MM/DD'),
             selectedDuration.value,
-            selectedTravelers.value,
+            selectedTravelers.value + 1, /* plus 1 to include person booking */
             selectedDestination.value.split(".")[0]
         )
     }
@@ -162,6 +165,7 @@ function gatherCompletedTrip(date, duration, travelers, destinationID) {
     buildATrip(completedTrip);
 }
 
+// might be able to live in userclass
 function calculateTripCost(desiredTrip, desiredDestination) {
     let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
     let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
@@ -181,7 +185,7 @@ function buildATrip(desiredTrip) {
         status: 'pending',
         suggestedActivities: []
     }
-        bookTripButton.classList.remove('hidden')
+    bookTripButton.classList.remove('hidden')
 }
 
 function bookRequestedTrip() {
@@ -208,7 +212,7 @@ function validateLogIn() {
 }
 
 function checkUserName() {
-    if(loginUserName.value.split('traveler')[1]) {
+    if (loginUserName.value.split('traveler')[1]) {
         let userID = loginUserName.value.split('traveler')[1];
         return allUsers[0].travelers.find(user => user.id === +userID).id
     }

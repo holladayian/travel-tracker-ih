@@ -1,13 +1,12 @@
-
 let domUpdates = {
 
     populateCards(filteredTrips) {
-        if(filteredTrips) {
+        if (filteredTrips) {
             let cardArea = document.querySelector('.card-area');
             cardArea.innerHTML = '';
             filteredTrips.forEach(trip => {
-                cardArea.insertAdjacentHTML('afterbegin', 
-                `
+                cardArea.insertAdjacentHTML('afterbegin',
+                    `
                 <section class="card">
                 <section class="card-header">
                    <!-- should this be a header tag?  -->
@@ -21,7 +20,7 @@ let domUpdates = {
                 `
                 )
             })
-            
+
         }
     },
 
@@ -39,11 +38,11 @@ let domUpdates = {
         let destinationList = document.querySelector('.input-destination');
 
         destinationNames.forEach(destinationName => {
-            destinationList.insertAdjacentHTML('afterbegin', 
-            `
+            destinationList.insertAdjacentHTML('afterbegin',
+                `
             <option id="${destinationName.id}">${destinationName.id}. ${destinationName.destination}</option>
             `)
-        }) 
+        })
 
     },
 

@@ -16,7 +16,7 @@ class User {
 
     searchTrips(timeFrame) {
         let today = moment(Date.now());
-        let searchedTrips;
+        let searchedTrips = [];
         if (timeFrame === 'present') {
             searchedTrips = this.searchPresentTrips(today)
         } else if (timeFrame === 'upcoming') {
@@ -35,9 +35,10 @@ class User {
 
     searchUpcomingTrips(today) {
         return this.trips.filter(trip => {
-            if(moment(trip.date).add(trip.duration, 'day').isAfter(today && trip.status === 'approved')) {
+            if (moment(trip.date).add(trip.duration, 'day').isAfter(today && trip.status === 'approved')) {
                 return trip
-            }})
+            }
+        })
     }
 
     searchPresentTrips(today) {
