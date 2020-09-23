@@ -124,6 +124,10 @@ describe('User', () => {
 
             it('should have a helper function to search past trips', () => {
                 expect(user.searchPastTrips(sampleToday).length).to.equal(4)
+            }),
+
+            it('should return an empty array if nothing is passed into searchTrips', () => {
+                expect(user.searchTrips()).to.deep.equal([])
             })
     })
 })

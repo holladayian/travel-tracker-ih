@@ -14,7 +14,8 @@ describe('domUpdates', () => {
             'tellMeYourMoneys',
             'updateListBox',
             'displayTripCost',
-            'displayTripImage'
+            'displayTripImage',
+            'hideEstimatedCosts'
         ], () => true);
     });
 
@@ -50,5 +51,11 @@ describe('domUpdates', () => {
     it('should run displayTripImage', () => {
         domUpdates.displayTripImage();
         expect(domUpdates.displayTripImage).to.have.been.called(1)
+    }),
+
+    it('should run hideEstimatedCosts', () => {
+        domUpdates.hideEstimatedCosts();
+        expect(domUpdates.hideEstimatedCosts).to.have.been.called(1)
     })
+
 })
