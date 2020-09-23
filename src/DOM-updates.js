@@ -1,9 +1,9 @@
 let domUpdates = {
 
     populateCards(filteredTrips) {
+        let cardArea = document.querySelector('.card-area');
+        cardArea.innerHTML = '';
         if (filteredTrips) {
-            let cardArea = document.querySelector('.card-area');
-            cardArea.innerHTML = '';
             filteredTrips.forEach(trip => {
                 cardArea.insertAdjacentHTML('afterbegin',
                     `

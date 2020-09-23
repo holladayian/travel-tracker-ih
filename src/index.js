@@ -4,7 +4,6 @@ import User from './User.js';
 import domUpdates from './DOM-updates.js';
 const moment = require('moment');
 
-
 let selectionBox = document.querySelector('.selection-box');
 let calculateCost = document.querySelector('.calculate-cost');
 let bookTripButton = document.querySelector('.book-requested-trip');
@@ -16,10 +15,7 @@ let loginUserName = document.querySelector('.username');
 let loginPassword = document.querySelector('.password');
 let loginButton = document.querySelector('.login-button');
 let loginArea = document.querySelector('.login-area');
-
 let selectedDestination = document.querySelector('.input-destination');
-
-
 
 let wantedTrip, allDestinations, user, allUsers;
 
@@ -76,8 +72,6 @@ function showTrips() {
     viewRequests.classList.add('hidden');
 }
 
-
-// break the below functionality into a class
 let fetchSetter = {
     setUserData(fetchedUserData) {
         user = new User(fetchedUserData);
@@ -119,12 +113,11 @@ function findAmountSpentOnAYear(totalTrips) {
         return totalPrice
     }, 0);
     let roundedTotalWithFee = (Math.round((totalSpentForAYear * 1.1) * 100) / 100)
-    // 168319.8
     domUpdates.tellMeYourMoneys(roundedTotalWithFee.toFixed(2))
 }
 
 function selectTimeOfTrips(event) {
-    let selector = 'pending';
+    let selector = '';
     if (event) {
         selector = event.target.classList.value
     }
@@ -136,11 +129,10 @@ function validateForm() {
     const selectedDate = document.querySelector('.input-date');
     const selectedDuration = document.querySelector('.input-duration');
     const selectedTravelers = document.querySelector('.input-travelers');
-    const selectedDestination = document.querySelector('.input-destination');
+
     const dateError = document.querySelector('.date-error');
     const durationError = document.querySelector('.duration-error');
     const travelersError = document.querySelector('.travelers-error');
-    // break the following three lines into DOM-updates
     dateError.classList.add('hidden');
     durationError.classList.add('hidden');
     travelersError.classList.add('hidden');
@@ -181,7 +173,6 @@ function gatherCompletedTrip(date, duration, travelers, destinationID) {
     buildATrip(completedTrip);
 }
 
-// might be able to live in userclass
 function calculateTripCost(desiredTrip, desiredDestination) {
     let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
     let totalPricePerPerson = costPerDuration += desiredDestination.estimatedFlightCostPerPerson;
@@ -212,6 +203,12 @@ function buildATrip(desiredTrip) {
 }
 
 function bookRequestedTrip() {
+    postRequestedTrip();
+    switchBackAfterTrip();
+    alert(`Your trip to ${allDestinations.find(location => location.id === wantedTrip.destinationID).destination} has been booked!`)
+}
+
+function postRequestedTrip() {
     let int = {
         method: 'POST',
         headers: {
@@ -221,17 +218,15 @@ function bookRequestedTrip() {
     };
     let requestedTrip = fetcher.fetchTripRequest(int);
     Promise.all([requestedTrip])
-        .then(fetchStuff(+user.id))
-        .then(switchBackAfterTrip())
-        .then(alert(`Your trip to ${allDestinations.find(location => location.id === wantedTrip.destinationID).destination} has been booked!`))
-
+        .then(() => fetchStuff(+user.id))
+        .catch(err => console.log('err', err))
 }
 
 function switchBackAfterTrip() {
     bookTripButton.classList.add('hidden');
     domUpdates.hideEstimatedCosts();
+    domUpdates.populateCards();
     showTrips();
-    selectTimeOfTrips();
 }
 
 function validateLogIn() {
@@ -253,7 +248,4 @@ function checkUserName() {
     }
 }
 
-
-
 export default fetchSetter;
-// export default allUsers;
