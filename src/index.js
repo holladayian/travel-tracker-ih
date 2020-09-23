@@ -129,6 +129,7 @@ function validateForm() {
     const selectedDate = document.querySelector('.input-date');
     const selectedDuration = document.querySelector('.input-duration');
     const selectedTravelers = document.querySelector('.input-travelers');
+
     const dateError = document.querySelector('.date-error');
     const durationError = document.querySelector('.duration-error');
     const travelersError = document.querySelector('.travelers-error');
@@ -191,7 +192,14 @@ function buildATrip(desiredTrip) {
         status: 'pending',
         suggestedActivities: []
     }
-    bookTripButton.classList.remove('hidden')
+  
+  function calculateTripCost(desiredTrip, desiredDestination) {
+        let costPerDuration = desiredTrip.gatheredDuration * desiredDestination.estimatedLodgingCostPerDay;
+        let totalPricePerPerson = costPerDuration + desiredDestination.estimatedFlightCostPerPerson;
+        let totalPriceForTheTrip = totalPricePerPerson * desiredTrip.gatheredTravelers;
+        domUpdates.displayTripCost((totalPriceForTheTrip * 1.1))
+    }
+        bookTripButton.classList.remove('hidden')
 }
 
 function bookRequestedTrip() {

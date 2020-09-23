@@ -11,7 +11,18 @@ Thius project was designed to help us get a handle on fetch, webpack, and spies,
 
 ## What it does
 
-The site should be able to log a user in, show them their trip data, and let them make requests for new trips
+The site should be able to log a user in, show them their trip data, and let them make requests for new trips, all while using apis.
+
+## Rubric
+- Use OOP to drive the design of the application and the code
+- Work with an API to send and receive data
+- Solidify the code review process
+- Create a robust test suite that thoroughly tests all functionality of a client-side application
+
+## Technologies
+- fetch API to retrieve and add data
+- Sass for getting fancy with your CSS
+- Mocha and Chai for testing your code
 
 ## Images
 
@@ -30,12 +41,6 @@ This is an image of the request page
 
 ![show a request](src/img/request.png)
 
-## Tag
+**You can find me here =>** [Ian Holladay](https://github.com/holladayian)  
 
-You can find me on github 
 
-@holladayian
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
