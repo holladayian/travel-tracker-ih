@@ -234,6 +234,8 @@ function validateLogIn() {
         loginArea.classList.add('hidden');
         requestsButton.classList.remove('hidden');
         viewTrips.classList.remove('hidden');
+    } else {
+        alert("Your username or password is incorrect")
     }
 }
 
