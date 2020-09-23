@@ -41,9 +41,6 @@ This is an image of the request page
 
 ![show a request](src/img/request.png)
 
-## Tag
+**You can find me here =>** [Ian Holladay](https://github.com/holladayian)  
 
-You can find me on github 
-
-@holladayian
 
