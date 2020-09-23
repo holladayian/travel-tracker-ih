@@ -136,7 +136,7 @@ function validateForm() {
     const selectedDate = document.querySelector('.input-date');
     const selectedDuration = document.querySelector('.input-duration');
     const selectedTravelers = document.querySelector('.input-travelers');
-    // const selectedDestination = document.querySelector('.input-destination');
+    const selectedDestination = document.querySelector('.input-destination');
     const dateError = document.querySelector('.date-error');
     const durationError = document.querySelector('.duration-error');
     const travelersError = document.querySelector('.travelers-error');
