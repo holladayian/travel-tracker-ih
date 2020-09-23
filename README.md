@@ -11,7 +11,7 @@ Thius project was designed to help us get a handle on fetch, webpack, and spies,
 
 ## What it does
 
-The site should be able to log a user in, show them their trip data, and let them make requests for new trips
+The site should be able to log a user in, show them their trip data, and let them make requests for new trips, all while using apis.
 
 ## Rubric
 - Use OOP to drive the design of the application and the code
