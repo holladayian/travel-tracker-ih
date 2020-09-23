@@ -15,6 +15,7 @@ let viewRequests = document.querySelector('.requests');
 let loginUserName = document.querySelector('.username');
 let loginPassword = document.querySelector('.password');
 let loginButton = document.querySelector('.login-button');
+let loginArea = document.querySelector('.login-area');
 
 let selectedDestination = document.querySelector('.input-destination');
 
@@ -29,6 +30,7 @@ bookTripButton.addEventListener('click', bookRequestedTrip);
 requestsButton.addEventListener('click', showRequests);
 tripsButton.addEventListener('click', showTrips);
 loginButton.addEventListener('click', validateLogIn);
+loginArea.addEventListener('keyup', checkKeyup);
 
 function fetchAllUsers() {
     let promisedAllUsers = fetcher.fetchAllUsers()
@@ -37,6 +39,13 @@ function fetchAllUsers() {
         .then(value => {
             allUsers = value
         })
+}
+
+function checkKeyup(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        validateLogIn()
+    }
 }
 
 function fetchStuff(userID) {
@@ -214,7 +223,6 @@ function bookRequestedTrip() {
 function switchBackAfterTrip() {
     bookTripButton.classList.add('hidden');
     domUpdates.hideEstimatedCosts();
-    // selectTimeOfTrips('pending');
     showTrips();
     selectTimeOfTrips();
 }
