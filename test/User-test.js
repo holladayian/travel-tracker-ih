@@ -73,9 +73,9 @@ describe('User', () => {
                 userID: 7,
                 destinationID: 31,
                 travelers: 6,
-                date: "2020/04/01",
+                date: "2020/09/20",
                 status: 'approved',
-                duration: 1
+                duration: 5
             }
         ];
         user = new User(sampleUser);
@@ -95,11 +95,11 @@ describe('User', () => {
             }),
 
             it('should be able to search past trips', () => {
-                expect(user.searchTrips('past').length).to.equal(5);
+                expect(user.searchTrips('past').length).to.equal(4);
             }),
 
             it('should be able to search current trips', () => {
-                expect(user.searchTrips('present')).to.equal(0);
+                expect(user.searchTrips('present').length).to.equal(1);
             }),
 
             it('should be able to search upcoming trips', () => {
@@ -110,15 +110,6 @@ describe('User', () => {
                 expect(user.searchTrips('pending').length).to.equal(1);
             }),
 
-            //    maybe test searchTrips if timeFrame is empty, should return an empty array
-
-            //  never want to return undefined
-
-            //    if argument is blank, should return umpty array
-            //     it('should not be able to search future trips', () => {
-            //         expect(user.searchTrips('future').length).to.be(undefined);
-            //    }),
-
             it('should have a helper function to search pending trips', () => {
                 expect(user.searchPendingTrips(sampleToday).length).to.equal(1)
             }),
@@ -128,11 +119,11 @@ describe('User', () => {
             }),
 
             it('should have a helper function to search current trips', () => {
-                expect(user.searchPresentTrips(sampleToday).length).to.equal(0)
+                expect(user.searchPresentTrips(sampleToday).length).to.equal(1)
             }),
 
             it('should have a helper function to search past trips', () => {
-                expect(user.searchPastTrips(sampleToday).length).to.equal(5)
+                expect(user.searchPastTrips(sampleToday).length).to.equal(4)
             })
     })
 })
