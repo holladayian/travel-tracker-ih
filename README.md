@@ -2,8 +2,6 @@
 
 A project by Ian Holladay
 
-## Link to the project's github page
-https://github.com/holladayian/travel-tracker-ih
 
 ## About
 
