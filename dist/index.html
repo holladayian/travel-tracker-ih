@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Travel Tracker</title>
+  </head>
+  <body>
+    <header>
+      <h1>Travel Tracker</h1>
+      <section>
+        <button class="request-button hidden">Request</button>
+        <button class="trips-button hidden">Trips</button>
+      </section>
+    </header>
+    <section class="login ">
+      <section class="login-area">
+        <section class="login-username">
+          <label for="username">Username:</label>
+          <input class="username" id="username" type="text">
+        </section>
+        <section class="login-password">
+          <label for="password">Password:</label>
+          <input class="password" id="password" type="text">
+        </section>
+        <button class="login-button">Login</button>
+      </section>
+    </section>
+
+    <section class="trips hidden">
+      <h2 class="welcome-message">Welcome User</h2>
+      <h3 class="total-yearly-spending">This Year, You have Spent Your Life Savings!</h3>
+      <section class="selection-box">
+        <button class="past">Past</button>
+        <button class="present">Present</button>
+        <button class="upcoming">Upcoming</button>
+        <button class="pending">Pending</button>
+      </section>
+      <section class="card-area"></section>
+  </section>
+  <section class="requests hidden">
+    <section class="trip-selection">
+      <button class="calculate-cost">Calculate Cost</button>
+      <section class="trip-selectors">
+        <section class="date-selection selection">
+          <label for="input-date" class="">When would you like to leave?</label>
+          <input class="input-date" id="input-date" type="text">
+
+        </section>
+        <h5 class="date-error hidden">Please Provide a Propper Date</h5>
+        <section class="trip-selection selection">
+          <label for="input-duration" class="">How many days would you like to stay?</label>
+          <input class="input-duration" id="input-duration" type="text">
+
+        </section>
+        <h5 class="duration-error hidden">Please Provide The Desired Amount of Days to Travel</h5>
+        <section class="traveler-selection selection">
+          <label for="input-travelers" class="">How many people are going with you?</label>
+          <input class="input-travelers" id="input-travelers" type="text">
+        </section>
+        <p class="travelers-error hidden">Please Provide the Number of Travelers That Are Going</p>
+
+        <section class="location-selection selection">
+          <label for="input-destination" class="">Where would you like to go?</label>
+          <select class="input-destination" id="input-destination" name="input-destination-liostbox" id=""></select>
+        </section>
+        <p class="destination-error hidden">Please Provide a Desired Destination</p>
+
+      </section>
+    </section>
+    <img class="selected-location" src="https://cdn.britannica.com/47/80547-050-8B316D38/Field-green-tea-Mount-Fuji-Shizuoka-prefecture.jpg" alt="A Super Beautiful Mountain">
+    
+  </section>
+  <section class="trip">
+    <p class="estimated-cost"></p>
+    <button class="book-requested-trip hidden">Book Trip</button>
+  </section>
+  <script type="text/javascript" src="main.bundle.js"></script></body>
+</html>
